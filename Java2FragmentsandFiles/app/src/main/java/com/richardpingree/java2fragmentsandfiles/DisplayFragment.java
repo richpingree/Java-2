@@ -17,12 +17,12 @@ public class DisplayFragment extends Fragment {
     private static final String ARG_NAME = "DisplayFragment.ARG_NAME";
     private static final String ARG_GENRE = "DisplayFragment.ARG_GENRE";
 
-    public static DisplayFragment newInstance(String _name, String _genre){
+    public static DisplayFragment newInstance(String _name){
         DisplayFragment frag = new DisplayFragment();
 
         Bundle args = new Bundle();
         args.putString(ARG_NAME, _name);
-        args.putString(ARG_GENRE, _genre);
+        //args.putString(ARG_GENRE, _genre);
         frag.setArguments(args);
 
         return frag;
@@ -41,19 +41,19 @@ public class DisplayFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_NAME)){
-            setDisplayText(args.getString(ARG_NAME), args.getString(ARG_GENRE));
+            setDisplayText(args.getString(ARG_NAME));
         }
     }
 
-    public void setDisplayText(String _name, String _genre){
+    public void setDisplayText(String _name){
         getArguments().putString(ARG_NAME, _name);
-        getArguments().putString(ARG_GENRE, _genre);
+       // getArguments().putString(ARG_GENRE, _genre);
 
         TextView nameText = (TextView) getView().findViewById(R.id.nameView);
-        TextView genreText = (TextView) getView().findViewById(R.id.genreView);
+        //TextView genreText = (TextView) getView().findViewById(R.id.genreView);
 
         nameText.setText(_name);
-        genreText.setText(_genre);
+        //genreText.setText(_genre);
     }
 }
 

@@ -3,9 +3,7 @@
 package com.richardpingree.java2fragmentsandfiles;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -28,12 +25,20 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
     public static final String TAG = "MainActivity.TAG";
+
+//    HashMap mNames = new HashMap();
+//    HashMap mGenres = new HashMap();
+//    HashMap mLabels = new HashMap();
+//    HashMap mCountries = new HashMap();
+//    HashMap mCities = new HashMap();
+//    HashMap mStates = new HashMap();
 
     EditText userInput;
     Button btn;
@@ -86,15 +91,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
             //executes asynctask
             try {
-                Artist result = null;
+                Artist result;
 
-                JSONArray apiArrayData = new myTask().execute(queryURl).get();
+                JSONArray apiArrayData =  new myTask().execute(queryURl).get();
 
-                try{
-                    result = new Artist(apiArrayData);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                result =  new Artist(apiArrayData);
+                Log.i("Test", "results from Task" + apiArrayData.toString());
 
                 getArtist(result);
 
@@ -107,56 +109,82 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
 
 
-                userInput.setText("");
-
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            userInput.setText("");
         }else{
-                //message for no network connectio
+                //message for no network connection
                 Toast.makeText(getBaseContext(), "Not Connected to Network!", Toast.LENGTH_LONG).show();
                 //Log.i(TAG, "internet not available");
-                try{
-                    getSavedData();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try{
+//                    getSavedData();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
         }
     }
-    //reads saved filed
-    private void getSavedData() throws IOException, JSONException{
-        if(readfile() != null){
-            Artist artist = new Artist(readfile());
-            getArtist(artist);
-        }else {
 
-        }
-    }
+//    private void getData(JSONArray result) throws JSONException{
+//
+//
+//        for(int i = 0; i<result.length(); i++){
+//            mNames.put("name_" + i, result.getJSONObject(i).getString("name"));
+//            Log.i(TAG, "names returned" + mNames.toString());
+//        }
+//
+//    }
+
+    //reads saved filed
+//    private void getSavedData() throws IOException, JSONException{
+//        if(readfile() != null){
+//            Artist artist = new Artist(readfile());
+//            getData(artist);
+//        }else {
+//
+//        }
+//    }
 
     //gets artist info and puts it in string arrays for fragments
     private void getArtist(Artist result) {
-        String[] names = new String[10];
-        String[] genres = new String[10];
+        String[] names = new String[result.getNames().size()];
+        String[] genres = new String[result.getGenres().size()];
+        String[] labels = new String[result.getLabels().size()];
+        String[] countries = new String[result.getCountries().size()];
+        String[] cities = new String[result.getCities().size()];
+        String[] states = new String[result.getStates().size()];
 
         for(int i=0; i<result.getNames().size(); i++){
             names[i] = result.getNames().get("name_" + i).toString();
-            genres[i] = result.getGenres().get("name_" + i).toString();
+            Log.i(TAG, "Names returned" + Arrays.toString(names));
+            genres[i] = result.getGenres().get("genre_" + i).toString();
+            Log.i(TAG, "Genres returned" + Arrays.toString(genres));
+            labels[i] = result.getLabels().get("label_" + i).toString();
+            Log.i(TAG, "Labels returned" + Arrays.toString(labels));
+            countries[i] = result.getCountries().get("country_" + i).toString();
+            Log.i(TAG, "Countries returned" + Arrays.toString(countries));
+            cities[i] = result.getCities().get("city_" + i).toString();
+            Log.i(TAG, "Cities returned" + Arrays.toString(cities));
+            states[i] = result.getStates().get("state_" + i).toString();
+            Log.i(TAG, "States returned" + Arrays.toString(states));
+
         }
-        createListFrag(names, genres);
+        createListFrag(names);
         createDisplayFrag();
     }
     //creates list fragment
-    public void createListFrag(String[] _names, String[] _genres){
-        getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names, _genres), ItemListFragment.TAG).commit();
+    public void createListFrag(String[] _names){
+        getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names), ItemListFragment.TAG).commit();
     }
     //creates display fragment
     public void createDisplayFrag(){
-        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance("None selected", ""), DisplayFragment.TAG).commit();
+        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance(""), DisplayFragment.TAG).commit();
     }
     //writes file
    private void createFile(JSONArray apiArrayData) throws IOException{
@@ -204,8 +232,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     URLConnection conn = queryURL.openConnection();
                     jsonString = IOUtils.toString(conn.getInputStream());
                     //removes brackets from api data
-                    jsonString = jsonString.replace("[","");
-                    jsonString = jsonString.replace("]","");
+                    //jsonString = jsonString.replace("[","");
+                    //jsonString = jsonString.replace("]","");
                     break;
                 } catch (Exception e) {
 
@@ -217,63 +245,64 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             //api string to json
 
-            JSONObject apiData;
-            JSONArray apiDataArray = null;
+            //JSONObject apiData;
+            //JSONArray apiDataArray = null;
 
+            JSONArray apiDataArray;
             try {
-                apiData = new JSONObject(jsonString);
-                Log.i("Test", "jsonarray" + apiData.toString());
+                apiDataArray = new JSONArray(jsonString);
+                Log.i("Test", "jsonarray" + apiDataArray.toString());
 
 
             } catch (Exception e){
                 Log.e("Test", "can not convert");
-                apiData = null;
-            }
-            try{
-                apiData = (apiData != null) ? apiData.getJSONObject(""): null;
-                apiDataArray = apiData.getJSONArray("");
-            } catch (JSONException e) {
-                e.printStackTrace();
                 apiDataArray = null;
             }
+//            try{
+//                apiData = (apiData != null) ? apiData.getJSONObject(""): null;
+//                apiDataArray = apiData.getJSONArray("");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//                apiDataArray = null;
+//            }
 
-//
+
             return apiDataArray;
         }
 
-        @Override
-        protected void onPostExecute(JSONArray apiDataArray) {
-
-
-            //returns data to display
-            if (apiDataArray != null){
-                try {
-                    Artist result = new Artist(apiDataArray);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        else{
-                //alert to tell user that artist not in database
-
-                AlertDialog.Builder alertView = new AlertDialog.Builder(MainActivity.this);
-                alertView.setTitle("Artist Not Found!");
-                alertView.setMessage("Please try a different artist.");
-                alertView.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                alertView.show();
-            }
-
-
-
-        }
-   }
+//        @Override
+//        protected void onPostExecute(JSONArray apiDataArray) {
+//
+//
+//        //returns data to display
+//        if (apiDataArray != null){
+//            try {
+//                Artist result = new Artist(apiDataArray);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//        }
+//        else{
+//            //alert to tell user that artist not in database
+//
+//            AlertDialog.Builder alertView = new AlertDialog.Builder(MainActivity.this);
+//            alertView.setTitle("Artist Not Found!");
+//            alertView.setMessage("Please try a different artist.");
+//            alertView.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
+//            alertView.show();
+//        }
+//
+//
+//
+//    }
+}
 
 
 }
