@@ -66,11 +66,6 @@ public class ItemListFragment extends ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-    }
-
-    @Override
     public void onActivityCreated(Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
 
@@ -84,8 +79,29 @@ public class ItemListFragment extends ListFragment {
         list.setAdapter(adapter);
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Bundle args = getArguments();
+        String[] names = args.getStringArray(ARG_NAME);
+
+        mListener.displayText(names[position]);
+    }
 
 
 
-
+//    @Override
+//    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
+//        super.onInflate(activity, attrs, savedInstanceState);
+//
+//        View view = getView();
+//
+//        ListView list = (ListView) view.findViewById(R.id.list);
+//
+//        Bundle args = getArguments();
+//        String[] _names = args.getStringArray(ARG_NAME);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, _names);
+//        list.setAdapter(adapter);
+//    }
 }

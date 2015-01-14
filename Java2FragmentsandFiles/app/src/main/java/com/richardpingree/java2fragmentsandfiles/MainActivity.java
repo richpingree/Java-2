@@ -25,26 +25,17 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, ItemListFragment.OnListViewClickListener  {
 
     public static final String TAG = "MainActivity.TAG";
 
-//    HashMap mNames = new HashMap();
-//    HashMap mGenres = new HashMap();
-//    HashMap mLabels = new HashMap();
-//    HashMap mCountries = new HashMap();
-//    HashMap mCities = new HashMap();
-//    HashMap mStates = new HashMap();
+
 
     EditText userInput;
     Button btn;
-
-    //ArrayList<Artist> apiArrayData = new ArrayList<>();
-
 
 
     @Override
@@ -56,7 +47,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(this);
-
 
 
     }
@@ -95,11 +85,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 JSONArray apiArrayData =  new myTask().execute(queryURl).get();
 
+                userInput.setText("");
+
                 result =  new Artist(apiArrayData);
                 Log.i("Test", "results from Task" + apiArrayData.toString());
 
                 getArtist(result);
-
 
 
                 try {
@@ -116,40 +107,31 @@ public class MainActivity extends Activity implements View.OnClickListener {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            userInput.setText("");
+
         }else{
                 //message for no network connection
                 Toast.makeText(getBaseContext(), "Not Connected to Network!", Toast.LENGTH_LONG).show();
                 //Log.i(TAG, "internet not available");
-//                try{
-//                    getSavedData();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                try{
+                    getSavedData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
-//    private void getData(JSONArray result) throws JSONException{
-//
-//
-//        for(int i = 0; i<result.length(); i++){
-//            mNames.put("name_" + i, result.getJSONObject(i).getString("name"));
-//            Log.i(TAG, "names returned" + mNames.toString());
-//        }
-//
-//    }
 
     //reads saved filed
-//    private void getSavedData() throws IOException, JSONException{
-//        if(readfile() != null){
-//            Artist artist = new Artist(readfile());
-//            getData(artist);
-//        }else {
-//
-//        }
-//    }
+    private void getSavedData() throws IOException, JSONException{
+        if(readfile() != null){
+            Artist artist = new Artist(readfile());
+            getArtist(artist);
+        }else {
+
+        }
+    }
 
     //gets artist info and puts it in string arrays for fragments
     private void getArtist(Artist result) {
@@ -162,25 +144,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         for(int i=0; i<result.getNames().size(); i++){
             names[i] = result.getNames().get("name_" + i).toString();
-            Log.i(TAG, "Names returned" + Arrays.toString(names));
+            //Log.i(TAG, "Names returned" + Arrays.toString(names));
             genres[i] = result.getGenres().get("genre_" + i).toString();
-            Log.i(TAG, "Genres returned" + Arrays.toString(genres));
+            //Log.i(TAG, "Genres returned" + Arrays.toString(genres));
             labels[i] = result.getLabels().get("label_" + i).toString();
-            Log.i(TAG, "Labels returned" + Arrays.toString(labels));
+            //Log.i(TAG, "Labels returned" + Arrays.toString(labels));
             countries[i] = result.getCountries().get("country_" + i).toString();
-            Log.i(TAG, "Countries returned" + Arrays.toString(countries));
+            //Log.i(TAG, "Countries returned" + Arrays.toString(countries));
             cities[i] = result.getCities().get("city_" + i).toString();
-            Log.i(TAG, "Cities returned" + Arrays.toString(cities));
+            //Log.i(TAG, "Cities returned" + Arrays.toString(cities));
             states[i] = result.getStates().get("state_" + i).toString();
-            Log.i(TAG, "States returned" + Arrays.toString(states));
+            //Log.i(TAG, "States returned" + Arrays.toString(states));
 
         }
-        createListFrag(names);
+        //createListFrag(names);
         createDisplayFrag();
     }
     //creates list fragment
     public void createListFrag(String[] _names){
+
         getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names), ItemListFragment.TAG).commit();
+
+
     }
     //creates display fragment
     public void createDisplayFrag(){
@@ -217,8 +202,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return data;
     }
 
+    @Override
+    public void displayText(String name) {
 
-    private class myTask extends AsyncTask<URL, Integer, JSONArray> {
+    }
+
+
+    class myTask extends AsyncTask<URL, Integer, JSONArray> {
 
         private static final String TAG = "AsyncTask.TAG";
         @Override
