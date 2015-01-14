@@ -49,6 +49,7 @@ public class Artist  {
     public HashMap getCountries(){
         return mCountries;
     }
+
     public HashMap getCities(){
         return mCities;
     }
@@ -56,7 +57,5 @@ public class Artist  {
     public HashMap getStates(){
         return mStates;
     }
-
-
 
 }

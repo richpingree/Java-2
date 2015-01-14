@@ -27,8 +27,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
-
-public class MainActivity extends Activity implements View.OnClickListener, ItemListFragment.OnListViewClickListener  {
+public class MainActivity extends Activity implements View.OnClickListener{
+//public class MainActivity extends Activity implements View.OnClickListener, ItemListFragment.OnListViewClickListener  {
 
     public static final String TAG = "MainActivity.TAG";
 
@@ -81,13 +81,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
             }
             //executes asynctask
             try {
-                Artist result;
 
                 JSONArray apiArrayData =  new myTask().execute(queryURl).get();
 
                 userInput.setText("");
 
-                result =  new Artist(apiArrayData);
+                Artist result =  new Artist(apiArrayData);
                 Log.i("Test", "results from Task" + apiArrayData.toString());
 
                 getArtist(result);
@@ -107,6 +106,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
 
         }else{
                 //message for no network connection
@@ -158,7 +159,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
 
         }
         createListFrag(names, genres, labels, countries, cities, states);
-        createDisplayFrag();
+        //createDisplayFrag();
     }
     //creates list fragment
     public void createListFrag(String[] _names, String[] _genres, String[] _labels, String[] _countries, String[] _cities, String[] _states){
@@ -166,12 +167,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
         //ItemListFragment frag = (ItemListFragment) ItemListFragment.newInstance(_names);
         getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names, _genres, _labels, _countries, _cities, _states), ItemListFragment.TAG).commit();
 
-
     }
     //creates display fragment
-    public void createDisplayFrag(){
-        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance("", "", "", "", "", ""), DisplayFragment.TAG).commit();
-    }
+//    public void createDisplayFrag(){
+//        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance("", "", "", "", "", ""), DisplayFragment.TAG).commit();
+//    }
     //writes file
    private void createFile(JSONArray apiArrayData) throws IOException{
 
@@ -203,18 +203,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
         return data;
     }
 
-    @Override
-    public void displayText(String name, String genre, String label, String country, String city, String state) {
-
-        DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
-
-        if(frag == null) {
-            frag = DisplayFragment.newInstance(name, genre, label, country, city, state);
-            getFragmentManager().beginTransaction().replace(R.id.frag_container2, frag, DisplayFragment.TAG).commit();
-        }else
-            frag.setDisplayText(name, genre, label, country, city, state );
-
-    }
+//    @Override
+//    public void displayText(String name, String genre, String label, String country, String city, String state) {
+//
+//        DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
+//
+//        if(frag == null) {
+//            frag = DisplayFragment.newInstance(name, genre, label, country, city, state);
+//            getFragmentManager().beginTransaction().replace(R.id.frag_container2, frag, DisplayFragment.TAG).commit();
+//        }else
+//            frag.setDisplayText(name, genre, label, country, city, state );
+//
+//    }
 
 
     class myTask extends AsyncTask<URL, Integer, JSONArray> {

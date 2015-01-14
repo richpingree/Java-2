@@ -2,6 +2,7 @@ package com.richardpingree.java2fragmentsandfiles;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ public class DisplayFragment extends Fragment {
         args.putString(ARG_CITY, _city);
         args.putString(ARG_STATE, _state);
         frag.setArguments(args);
+
+        Log.i(TAG, _name);
 
         return frag;
     }
