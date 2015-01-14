@@ -110,7 +110,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
 
         }else{
                 //message for no network connection
-                Toast.makeText(getBaseContext(), "Not Connected to Network!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Not Connected to Network! Loading saved file!", Toast.LENGTH_LONG).show();
                 //Log.i(TAG, "internet not available");
                 try{
                     getSavedData();
@@ -157,19 +157,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
             //Log.i(TAG, "States returned" + Arrays.toString(states));
 
         }
-        //createListFrag(names);
+        createListFrag(names, genres, labels, countries, cities, states);
         createDisplayFrag();
     }
     //creates list fragment
-    public void createListFrag(String[] _names){
+    public void createListFrag(String[] _names, String[] _genres, String[] _labels, String[] _countries, String[] _cities, String[] _states){
 
-        getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names), ItemListFragment.TAG).commit();
+        //ItemListFragment frag = (ItemListFragment) ItemListFragment.newInstance(_names);
+        getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names, _genres, _labels, _countries, _cities, _states), ItemListFragment.TAG).commit();
 
 
     }
     //creates display fragment
     public void createDisplayFrag(){
-        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance(""), DisplayFragment.TAG).commit();
+        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance("", "", "", "", "", ""), DisplayFragment.TAG).commit();
     }
     //writes file
    private void createFile(JSONArray apiArrayData) throws IOException{
@@ -203,7 +204,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
     }
 
     @Override
-    public void displayText(String name) {
+    public void displayText(String _name, String _genre, String _label, String _country, String _city, String _state) {
+
+        DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
+
+        if(frag == null) {
+            frag = DisplayFragment.newInstance(_name, _genre, _label, _country, _city, _state);
+            getFragmentManager().beginTransaction().replace(R.id.frag_container2, frag, DisplayFragment.TAG).commit();
+        }else
+            frag.setDisplayText(_name, _genre, _label, _country, _city, _state );
 
     }
 
