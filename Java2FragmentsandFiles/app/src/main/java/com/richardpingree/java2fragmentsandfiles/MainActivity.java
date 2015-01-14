@@ -125,8 +125,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
 
     //reads saved filed
     private void getSavedData() throws IOException, JSONException{
-        if(readfile() != null){
-            Artist artist = new Artist(readfile());
+        if(readFile() != null){
+            Artist artist = new Artist(readFile());
             getArtist(artist);
         }else {
 
@@ -183,7 +183,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
        fos.close();
     }
     //reads file
-    private JSONArray readfile() throws IOException, JSONException {
+    private JSONArray readFile() throws IOException, JSONException {
 
         FileInputStream fis = openFileInput("myfile.txt");
 
@@ -204,15 +204,15 @@ public class MainActivity extends Activity implements View.OnClickListener, Item
     }
 
     @Override
-    public void displayText(String _name, String _genre, String _label, String _country, String _city, String _state) {
+    public void displayText(String name, String genre, String label, String country, String city, String state) {
 
         DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
 
         if(frag == null) {
-            frag = DisplayFragment.newInstance(_name, _genre, _label, _country, _city, _state);
+            frag = DisplayFragment.newInstance(name, genre, label, country, city, state);
             getFragmentManager().beginTransaction().replace(R.id.frag_container2, frag, DisplayFragment.TAG).commit();
         }else
-            frag.setDisplayText(_name, _genre, _label, _country, _city, _state );
+            frag.setDisplayText(name, genre, label, country, city, state );
 
     }
 

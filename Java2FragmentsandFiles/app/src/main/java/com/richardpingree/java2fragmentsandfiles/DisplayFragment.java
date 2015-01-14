@@ -41,12 +41,15 @@ public class DisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container,
                              Bundle _savedInstanceState) {
         View view = _inflater.inflate(R.layout.display_fragment, _container, false);
+
+
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
+
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_NAME)){
