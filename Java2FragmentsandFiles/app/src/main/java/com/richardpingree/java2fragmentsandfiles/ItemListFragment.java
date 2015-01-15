@@ -65,10 +65,13 @@ public class ItemListFragment extends ListFragment {
 //            throw new IllegalArgumentException();
 //        }
 //    }
+
+
     @Override
     public View onCreateView(LayoutInflater _inflater, ViewGroup _container,
                              Bundle _savedInstanceState) {
         View view = _inflater.inflate(R.layout.list_fragment, _container, false);
+
         return view;
     }
 
@@ -77,7 +80,7 @@ public class ItemListFragment extends ListFragment {
     public void onActivityCreated(Bundle _savedInstanceState) {
         super.onActivityCreated(_savedInstanceState);
 
-        View view = getView();
+        View view = getListView();
 
         ListView list = (ListView) view.findViewById(R.id.list);
 

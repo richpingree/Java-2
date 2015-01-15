@@ -4,6 +4,7 @@ package com.richardpingree.java2fragmentsandfiles;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -32,6 +33,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     public static final String TAG = "MainActivity.TAG";
 
+    private SharedPreferences settings;
+
 
 
     EditText userInput;
@@ -48,7 +51,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(this);
 
-
+        getFragmentManager().beginTransaction().replace(R.id.frag_container3, new SettingsFragment()).commit();
     }
 
     protected boolean isOnline() {
@@ -161,6 +164,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         createListFrag(names, genres, labels, countries, cities, states);
         //createDisplayFrag();
     }
+
     //creates list fragment
     public void createListFrag(String[] _names, String[] _genres, String[] _labels, String[] _countries, String[] _cities, String[] _states){
 
