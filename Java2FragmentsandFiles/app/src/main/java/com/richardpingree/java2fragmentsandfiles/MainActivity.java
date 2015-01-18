@@ -7,15 +7,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -25,13 +23,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 //public class MainActivity extends Activity implements View.OnClickListener, ItemListFragment.OnListViewClickListener  {
 
     public static final String TAG = "MainActivity.TAG";
+
+    JSONArray apiArrayData;
 
     private SharedPreferences settings;
 
@@ -51,7 +49,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(this);
 
-        getFragmentManager().beginTransaction().replace(R.id.frag_container3, new SettingsFragment()).commit();
     }
 
     protected boolean isOnline() {
@@ -72,8 +69,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //replaces spaces with underscore and puts lowercase
         getInput = getInput.replaceAll(" ", "_").toLowerCase();
 
-        if (isOnline()) {
-            //Log.i("Test", "you have an internet connection.");
+        if(isOnline()) {
 
             String baseURL = "http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs";
             URL queryURl = null;
@@ -82,88 +78,113 @@ public class MainActivity extends Activity implements View.OnClickListener{
             } catch (MalformedURLException e) {
                 //e.printStackTrace();
             }
-            //executes asynctask
-            try {
-
-                JSONArray apiArrayData =  new myTask().execute(queryURl).get();
-
-                userInput.setText("");
-
-                Artist result =  new Artist(apiArrayData);
-                Log.i("Test", "results from Task" + apiArrayData.toString());
-
-                getArtist(result);
-
-
-                try {
-                    createFile(apiArrayData);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-
-        }else{
-                //message for no network connection
-                Toast.makeText(getBaseContext(), "Not Connected to Network! Loading saved file!", Toast.LENGTH_LONG).show();
-                //Log.i(TAG, "internet not available");
-                try{
-                    getSavedData();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
-    }
-
-
-    //reads saved filed
-    private void getSavedData() throws IOException, JSONException{
-        if(readFile() != null){
-            Artist artist = new Artist(readFile());
-            getArtist(artist);
-        }else {
+            new myTask().execute(queryURl);
 
         }
     }
+//    @Override
+//    public void onClick(View v) {
+//
+//        //get and user input
+//        String getInput = userInput.getText().toString();
+//
+//        //replaces spaces with underscore and puts lowercase
+//        getInput = getInput.replaceAll(" ", "_").toLowerCase();
+//
+//        if (isOnline()) {
+//            //Log.i("Test", "you have an internet connection.");
+//
+//            String baseURL = "http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs";
+//            URL queryURl = null;
+//            try {
+//                queryURl = new URL(baseURL + "&name=" + getInput);
+//            } catch (MalformedURLException e) {
+//                //e.printStackTrace();
+//            }
+//            //executes asynctask
+//            try {
+//
+//                apiArrayData =  new myTask().execute(queryURl).get();
+//
+//                //JSONArray apiArrayData =  new myTask().execute(queryURl).get();
+//
+//                userInput.setText("");
+//
+//                Artist result =  new Artist(apiArrayData);
+//                Log.i("Test", "results from Task" + apiArrayData.toString());
+//
+//                getArtist(result);
+//
+//
+//                try {
+//                    createFile(apiArrayData);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//
+//        }else{
+//                //message for no network connection
+//                Toast.makeText(getBaseContext(), "Not Connected to Network! Loading saved file!", Toast.LENGTH_LONG).show();
+//                //Log.i(TAG, "internet not available");
+//                try{
+//                    getSavedData();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//        }
+//    }
+
+
+//    //reads saved filed
+//    private void getSavedData() throws IOException, JSONException{
+//        if(readFile() != null){
+//            Artist artist = new Artist(readFile());
+//            getArtist(artist);
+//        }else {
+//
+//        }
+//    }
 
     //gets artist info and puts it in string arrays for fragments
-    private void getArtist(Artist result) {
-        String[] names = new String[result.getNames().size()];
-        String[] genres = new String[result.getGenres().size()];
-        String[] labels = new String[result.getLabels().size()];
-        String[] countries = new String[result.getCountries().size()];
-        String[] cities = new String[result.getCities().size()];
-        String[] states = new String[result.getStates().size()];
-
-        for(int i=0; i<result.getNames().size(); i++){
-            names[i] = result.getNames().get("name_" + i).toString();
-            //Log.i(TAG, "Names returned" + Arrays.toString(names));
-            genres[i] = result.getGenres().get("genre_" + i).toString();
-            //Log.i(TAG, "Genres returned" + Arrays.toString(genres));
-            labels[i] = result.getLabels().get("label_" + i).toString();
-            //Log.i(TAG, "Labels returned" + Arrays.toString(labels));
-            countries[i] = result.getCountries().get("country_" + i).toString();
-            //Log.i(TAG, "Countries returned" + Arrays.toString(countries));
-            cities[i] = result.getCities().get("city_" + i).toString();
-            //Log.i(TAG, "Cities returned" + Arrays.toString(cities));
-            states[i] = result.getStates().get("state_" + i).toString();
-            //Log.i(TAG, "States returned" + Arrays.toString(states));
-
-        }
-        createListFrag(names, genres, labels, countries, cities, states);
-        //createDisplayFrag();
-    }
+//    private void getArtist(Artist result) {
+//        String[] names = new String[result.getNames().size()];
+//        String[] genres = new String[result.getGenres().size()];
+//        String[] labels = new String[result.getLabels().size()];
+//        String[] countries = new String[result.getCountries().size()];
+//        String[] cities = new String[result.getCities().size()];
+//        String[] states = new String[result.getStates().size()];
+//
+//        for(int i=0; i<result.getNames().size(); i++){
+//            names[i] = result.getNames().get("name_" + i).toString();
+//            //Log.i(TAG, "Names returned" + Arrays.toString(names));
+//            genres[i] = result.getGenres().get("genre_" + i).toString();
+//            //Log.i(TAG, "Genres returned" + Arrays.toString(genres));
+//            labels[i] = result.getLabels().get("label_" + i).toString();
+//            //Log.i(TAG, "Labels returned" + Arrays.toString(labels));
+//            countries[i] = result.getCountries().get("country_" + i).toString();
+//            //Log.i(TAG, "Countries returned" + Arrays.toString(countries));
+//            cities[i] = result.getCities().get("city_" + i).toString();
+//            //Log.i(TAG, "Cities returned" + Arrays.toString(cities));
+//            states[i] = result.getStates().get("state_" + i).toString();
+//            //Log.i(TAG, "States returned" + Arrays.toString(states));
+//
+//        }
+//        createListFrag(names, genres, labels, countries, cities, states);
+//        //createDisplayFrag();
+//    }
 
     //creates list fragment
     public void createListFrag(String[] _names, String[] _genres, String[] _labels, String[] _countries, String[] _cities, String[] _states){
@@ -176,6 +197,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 //    public void createDisplayFrag(){
 //        getFragmentManager().beginTransaction().replace(R.id.frag_container2, DisplayFragment.newInstance("", "", "", "", "", ""), DisplayFragment.TAG).commit();
 //    }
+
+
+
     //writes file
    private void createFile(JSONArray apiArrayData) throws IOException{
 
@@ -186,6 +210,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
        fos.write(text.getBytes());
        fos.close();
     }
+
+
     //reads file
     private JSONArray readFile() throws IOException, JSONException {
 
@@ -220,92 +246,29 @@ public class MainActivity extends Activity implements View.OnClickListener{
 //
 //    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-    class myTask extends AsyncTask<URL, Integer, JSONArray> {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        private static final String TAG = "AsyncTask.TAG";
-        @Override
-        protected JSONArray doInBackground(URL... urls) {
-
-            String jsonString = "";
-
-            //collect api response
-            for (URL queryURL: urls) {
-                try {
-                    URLConnection conn = queryURL.openConnection();
-                    jsonString = IOUtils.toString(conn.getInputStream());
-                    //removes brackets from api data
-                    //jsonString = jsonString.replace("[","");
-                    //jsonString = jsonString.replace("]","");
-                    break;
-                } catch (Exception e) {
-
-                    //Log.e(TAG, "could not connect to network" + queryURL.toString());
-                }
-            }
-           Log.i(TAG, "received data" + jsonString);
-
-
-            //api string to json
-
-            //JSONObject apiData;
-            //JSONArray apiDataArray = null;
-
-            JSONArray apiDataArray;
-            try {
-                apiDataArray = new JSONArray(jsonString);
-                Log.i("Test", "jsonarray" + apiDataArray.toString());
-
-
-            } catch (Exception e){
-                Log.e("Test", "can not convert");
-                apiDataArray = null;
-            }
-//            try{
-//                apiData = (apiData != null) ? apiData.getJSONObject(""): null;
-//                apiDataArray = apiData.getJSONArray("");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//                apiDataArray = null;
-//            }
-
-
-            return apiDataArray;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
 
-//        @Override
-//        protected void onPostExecute(JSONArray apiDataArray) {
-//
-//
-//        //returns data to display
-//        if (apiDataArray != null){
-//            try {
-//                Artist result = new Artist(apiDataArray);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//        }
-//        else{
-//            //alert to tell user that artist not in database
-//
-//            AlertDialog.Builder alertView = new AlertDialog.Builder(MainActivity.this);
-//            alertView.setTitle("Artist Not Found!");
-//            alertView.setMessage("Please try a different artist.");
-//            alertView.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.cancel();
-//                }
-//            });
-//            alertView.show();
-//        }
-//
-//
-//
-//    }
-}
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
 
 }

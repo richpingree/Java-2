@@ -48,16 +48,5 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/frag_container3"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="310dp"
-        android:layout_marginBottom="300dp">
-
-
-    </RelativeLayout>
 
 </RelativeLayout>
