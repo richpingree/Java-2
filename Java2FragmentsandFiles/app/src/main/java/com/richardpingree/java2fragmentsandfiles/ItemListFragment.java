@@ -2,18 +2,9 @@
 
 package com.richardpingree.java2fragmentsandfiles;
 
-import android.R;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -76,8 +67,8 @@ public class ItemListFragment extends ListFragment {
         super.onActivityCreated(_savedInstanceState);
 
 
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), R.layout.simple_list_item_1, artistList);
-        setListAdapter(adapter);
+        //SimpleAdapter adapter = new SimpleAdapter(getActivity(), R.layout.simple_list_item_1, artistList);
+        //setListAdapter(adapter);
     }
 
 //    @Override
