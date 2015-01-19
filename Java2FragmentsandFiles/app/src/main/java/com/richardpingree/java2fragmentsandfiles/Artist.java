@@ -13,21 +13,16 @@ public class Artist  {
     public String artistCity;
     public String artistState;
 
-    public Artist (){};
+    public Artist (String artistName, String artistGenre, String artistLabel, String artistCountry, String artistCity, String artistState){
+        this.artistName = artistName;
+        this.artistGenre = artistGenre;
+        this.artistLabel = artistLabel;
+        this.artistCountry = artistCountry;
+        this.artistCity = artistCity;
+        this.artistState = artistState;
+    }
 
-//    public Artists(JSONArray artistData) throws JSONException {
-//        //JSONArray artistData = new JSONArray();
-//
-//        for (int i =0; i<artistData.length(); i++){
-//
-//            mNames.put("name_" + i, artistData.getJSONObject(i).getString("name"));
-//            mGenres.put("genre_" + i, artistData.getJSONObject(i).getString("genre"));
-//            mLabels.put("label_" + i, artistData.getJSONObject(i).getString("label"));
-//            mCountries.put("country_" + i, artistData.getJSONObject(i).getString("country"));
-//            mCities.put("city_" + i, artistData.getJSONObject(i).getString("city"));
-//            mStates.put("state_" + i, artistData.getJSONObject(i).getString("state"));
-//        }
-//    }
+
 
     public String getArtistName() {
         return artistName;

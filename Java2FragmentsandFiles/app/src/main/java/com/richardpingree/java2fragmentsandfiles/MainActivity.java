@@ -21,8 +21,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 //public class MainActivity extends Activity implements View.OnClickListener, ItemListFragment.OnListViewClickListener  {
@@ -71,15 +69,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         if(isOnline()) {
 
-            String baseURL = "http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs";
-            URL queryURl = null;
-            try {
-                queryURl = new URL(baseURL + "&name=" + getInput);
-            } catch (MalformedURLException e) {
-                //e.printStackTrace();
-            }
-            new myTask().execute(queryURl);
 
+            //new myTask().execute(queryURl);
+            (new myTask()).execute("http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs&name=" + getInput);
         }
     }
 //    @Override
@@ -190,7 +182,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void createListFrag(String[] _names, String[] _genres, String[] _labels, String[] _countries, String[] _cities, String[] _states){
 
         //ItemListFragment frag = (ItemListFragment) ItemListFragment.newInstance(_names);
-        getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names, _genres, _labels, _countries, _cities, _states), ItemListFragment.TAG).commit();
+        //getFragmentManager().beginTransaction().replace(R.id.frag_container1, ItemListFragment.newInstance(_names, _genres, _labels, _countries, _cities, _states), ItemListFragment.TAG).commit();
 
     }
     //creates display fragment

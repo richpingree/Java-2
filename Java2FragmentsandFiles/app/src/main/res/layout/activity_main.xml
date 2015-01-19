@@ -10,7 +10,8 @@
         android:id="@+id/userText"
         android:layout_gravity="left|top"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:theme="@style/EditTextBlueAppTheme"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -19,7 +20,8 @@
         android:text="Search"
         android:id="@+id/button"
         android:layout_marginLeft="190dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:theme="@style/ButtonBlueAppTheme"/>
 
     <RelativeLayout
         android:id="@+id/frag_container1"
@@ -28,7 +30,8 @@
         android:orientation="vertical"
         android:layout_marginTop="110dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="250dp">
+        android:layout_marginBottom="250dp"
+        android:theme="@style/_BlueAppTheme">
 
 
     </RelativeLayout>
@@ -38,7 +41,9 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="300dp">
+        android:layout_marginTop="300dp"
+        android:theme="@style/_BlueAppTheme">
+
 
 
     </RelativeLayout>
