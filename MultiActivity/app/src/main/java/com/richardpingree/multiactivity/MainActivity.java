@@ -11,6 +11,8 @@ public class MainActivity extends ActionBarActivity {
 
     private static final int ADD_REQUEST = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +53,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ADD_REQUEST && resultCode == RESULT_OK){
-            String movieTitle = data.getStringExtra("movieTitle");
 
+            Movie movie = data.getExtras("movie");
         }
     }
 }

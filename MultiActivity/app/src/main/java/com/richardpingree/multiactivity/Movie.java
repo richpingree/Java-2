@@ -11,6 +11,8 @@ public class Movie implements Serializable {
     private String mFormat;
     private String mGenre;
 
+
+
     public Movie(){
         mTitle = "";
         mFormat = "";

@@ -12,17 +12,24 @@ public class AddMovieActivity extends Activity implements View.OnClickListener {
 
     public static final String TAG = "AddMovieActivity";
 
+    String mTitle;
+    String mFormat;
+    String mGenre;
     EditText titleInput;
     EditText formatInput;
     EditText genreInput;
     Button addBtn;
+
+    Movie movieObject = new Movie(mTitle, mFormat, mGenre);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
 
             addFragment frag = addFragment.newInstance();
             getFragmentManager().beginTransaction().replace(R.id.container, frag, addFragment.TAG).commit();
@@ -35,16 +42,23 @@ public class AddMovieActivity extends Activity implements View.OnClickListener {
 
         addBtn = (Button)findViewById(R.id.button);
         addBtn.setOnClickListener(this);
+
+
     }
+
 
     @Override
     public void onClick(View v) {
 
-        Intent addIntent = new Intent();
-        addIntent.putExtra("movieTitle", titleInput.getText().toString());
-        addIntent.putExtra("movieFormat", formatInput.getText().toString());
-        addIntent.putExtra("movieGenre", genreInput.getText().toString());
-        setResult(RESULT_OK, addIntent);
+        Intent toList = new Intent();
+        mTitle = titleInput.getText().toString();
+        movieObject.setTitle(mTitle);
+        mFormat = formatInput.getText().toString();
+        movieObject.setFormat(mFormat);
+        mGenre = genreInput.getText().toString();
+        movieObject.setGenre(mGenre);
+
+        toList.putExtra("movie", toList);
         finish();
     }
 }
