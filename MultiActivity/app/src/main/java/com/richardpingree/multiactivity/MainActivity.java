@@ -46,4 +46,13 @@ public class MainActivity extends ActionBarActivity {
          Intent addIntent = new Intent(this, AddMovieActivity.class);
          startActivityForResult(addIntent, ADD_REQUEST);
      }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ADD_REQUEST && resultCode == RESULT_OK){
+            String movieTitle = data.getStringExtra("movieTitle");
+
+        }
+    }
 }
