@@ -28,6 +28,7 @@ public class ListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        //data from Form
         String mTitle = getIntent().getStringExtra("mTitle");
         Log.e(TAG, "title: " + mTitle);
         String mFormat = getIntent().getStringExtra("mFormat");
