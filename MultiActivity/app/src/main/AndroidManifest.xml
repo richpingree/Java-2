@@ -16,16 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".AddMovieActivity"
-            android:label="Add Contact" >
-        </activity>
-        <activity
-            android:name=".DetailActivity"
-            android:label="@string/title_activity_detail" >
+            android:name=".ListActivity"
+            android:label="@string/title_activity_list" >
         </activity>
     </application>
 
 </manifest>
-
-

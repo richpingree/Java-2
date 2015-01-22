@@ -8,5 +8,6 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_add_movie">AddMovieActivity</string>
     <string name="Add_Movie">add Movie</string>
+    <string name="title_activity_list">ListActivity</string>
 
 </resources>
