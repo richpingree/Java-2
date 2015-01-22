@@ -15,7 +15,11 @@ public class ListActivity extends ActionBarActivity {
 
     public static final String TAG = "ListActivity";
 
+
     public ArrayList<Movie> movies = new ArrayList<Movie>();
+
+
+
 
     ListView list;
 
@@ -28,6 +32,8 @@ public class ListActivity extends ActionBarActivity {
         Log.e(TAG, "title: " + mTitle);
         String mFormat = getIntent().getStringExtra("mFormat");
         String mGenre = getIntent().getStringExtra("mGenre");
+
+
 
         movies.add(new Movie(mTitle, mFormat, mGenre));
 

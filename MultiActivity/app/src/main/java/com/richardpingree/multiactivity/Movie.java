@@ -13,11 +13,11 @@ public class Movie implements Serializable {
 
 
 
-    public Movie(){
-        mTitle = "";
-        mFormat = "";
-        mGenre = "";
-    }
+//    public Movie(){
+//        mTitle = "";
+//        mFormat = "";
+//        mGenre = "";
+//    }
 
     public Movie(String title, String format, String genre){
         mTitle = title;
