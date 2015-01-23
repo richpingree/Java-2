@@ -1,10 +1,13 @@
 package com.richardpingree.multiactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -57,6 +60,7 @@ public class ListActivity extends ActionBarActivity {
         //Log.i(TAG, "Movie String: " + movieString);
 
        // movies.add(new Movie(movieString));
+        final Intent intent = new Intent(getBaseContext(), DetailActivity.class);
 
         Log.e(TAG, "list output" + movies.toString());
         list = (ListView)findViewById(R.id.listView);
@@ -64,7 +68,24 @@ public class ListActivity extends ActionBarActivity {
         ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(this, android.R.layout.simple_list_item_1, movies);
         list.setAdapter(adapter);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Movie movieSelected = (Movie)list.getItemAtPosition(position);
+
+                String title = movieSelected.getTitle();
+                String format = movieSelected.getFormat();
+                String genre = movieSelected.getGenre();
+                intent.putExtra("mTitle", title);
+                intent.putExtra("mFormat", format);
+                intent.putExtra("mGenre", genre);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
 
     
 

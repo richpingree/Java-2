@@ -1,17 +1,44 @@
 package com.richardpingree.multiactivity;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends Activity {
+
+    public static final String TAG = "DetailActivity.TAG";
+
+    TextView movieTitle;
+    TextView movieFormat;
+    TextView movieGenre;
+    Button delBtn;
+    Button launchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        Intent intent = getIntent();
+        movieTitle = (TextView)findViewById(R.id.textView5);
+        movieFormat = (TextView)findViewById(R.id.textView4);
+        movieGenre = (TextView)findViewById(R.id.textView6);
+        String mTitle = intent.getStringExtra("mTitle");
+        String mFormat = intent.getStringExtra("mFormat");
+        String mGenre = intent.getStringExtra("mGenre");
+
+        Log.i(TAG, "Title: " + mTitle + " Format: " + mFormat + " Genre: " + mGenre);
+
+        movieTitle.setText("Movie Title: " + mTitle);
+        movieFormat.setText("Movie Format: " + mFormat);
+        movieGenre.setText("Movie Genre: " + mGenre);
+
     }
 
 
