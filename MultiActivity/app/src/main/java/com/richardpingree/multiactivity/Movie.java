@@ -29,6 +29,11 @@ public class Movie implements Serializable {
 
     }
 
+    //used for listtitle
+    @Override
+    public String toString() {
+        return mTitle;
+    }
 
     public String getTitle(){
         return mTitle;
