@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,6 +26,9 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        delBtn = (Button)findViewById(R.id.deletebtn);
+        launchBtn = (Button)findViewById(R.id.button3);
+
         Intent intent = getIntent();
         movieTitle = (TextView)findViewById(R.id.textView5);
         movieFormat = (TextView)findViewById(R.id.textView4);
@@ -38,6 +42,17 @@ public class DetailActivity extends Activity {
         movieTitle.setText("Movie Title: " + mTitle);
         movieFormat.setText("Movie Format: " + mFormat);
         movieGenre.setText("Movie Genre: " + mGenre);
+
+    }
+
+    public void sendMessage(View v){
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "Now in " + '\n' + movieTitle.getText().toString() + '\n' +
+        movieFormat.getText().toString() + '\n' + movieGenre.getText().toString());
+        intent.setType("text/plain");
+        startActivity(intent);
 
     }
 
