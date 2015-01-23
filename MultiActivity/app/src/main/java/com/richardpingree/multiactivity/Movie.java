@@ -12,14 +12,13 @@ public class Movie implements Serializable {
     private String mGenre;
 
 
-
 //    public Movie(){
 //        mTitle = "";
 //        mFormat = "";
 //        mGenre = "";
 //    }
 
-    public Movie(String title, String format, String genre){
+    public Movie(String title, String format, String genre) {
         mTitle = title;
         mFormat = format;
         mGenre = genre;
@@ -29,33 +28,35 @@ public class Movie implements Serializable {
 
     }
 
-    //used for listtitle
-    @Override
-    public String toString() {
+
+    public String getTitle() {
         return mTitle;
     }
 
-    public String getTitle(){
-        return mTitle;
-    }
-
-    public void setTitle(String mTitle){
+    public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
 
-    public String getFormat(){
+    public String getFormat() {
         return mFormat;
     }
 
-    public void setFormat(String mFormat){
+    public void setFormat(String mFormat) {
         this.mFormat = mFormat;
     }
 
-    public String getGenre(){
+    public String getGenre() {
         return mGenre;
     }
 
-    public void setGenre(String mGenre){
+    public void setGenre(String mGenre) {
         this.mGenre = mGenre;
+    }
+
+
+    //used for setting title in list view
+    @Override
+    public String toString() {
+        return mTitle;
     }
 }

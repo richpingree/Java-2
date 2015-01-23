@@ -11,6 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
@@ -20,6 +23,7 @@ public class ListActivity extends ActionBarActivity {
 
 
     public ArrayList<Movie> movies = new ArrayList<Movie>();
+    ArrayAdapter<Movie> adapter;
 
 
 
@@ -37,12 +41,8 @@ public class ListActivity extends ActionBarActivity {
         String mFormat = extras.getString("mFormat");
         String mGenre = extras.getString("mGenre");
 
-        //data from Form
-//        String mTitle = getIntent().getStringExtra("mTitle");
-//        String mFormat = getIntent().getStringExtra("mFormat");
-//        String mGenre = getIntent().getStringExtra("mGenre");
 
-        Log.e(TAG, "title: " + mTitle + " format: " + mFormat + " genre: " + mGenre);
+       // Log.e(TAG, "title: " + mTitle + " format: " + mFormat + " genre: " + mGenre);
 
         String title = mTitle;
         String format = mFormat;
@@ -50,23 +50,26 @@ public class ListActivity extends ActionBarActivity {
         Movie movie = new Movie(title, format, genre);
 
 
-        Log.i(TAG, movie.toString());
+        //Log.i(TAG, movie.toString());
 
         movies.add(movie);
 
-        //String[] movie = new String[]{mTitle.toString(), mFormat.toString(), mGenre.toString()};
-        Log.i(TAG, "Movie Array: " + movies.toString());
-        //String movieString = movie.toString();
-        //Log.i(TAG, "Movie String: " + movieString);
+        //Log.i(TAG, "Movie Array: " + movies.toString());
 
-       // movies.add(new Movie(movieString));
+        try {
+            createFile(movies);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         final Intent intent = new Intent(getBaseContext(), DetailActivity.class);
 
         Log.e(TAG, "list output" + movies.toString());
         list = (ListView)findViewById(R.id.listView);
 
-        ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(this, android.R.layout.simple_list_item_1, movies);
+        adapter = new ArrayAdapter<Movie>(this, android.R.layout.simple_list_item_1, movies);
         list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,12 +82,54 @@ public class ListActivity extends ActionBarActivity {
                 intent.putExtra("mTitle", title);
                 intent.putExtra("mFormat", format);
                 intent.putExtra("mGenre", genre);
+                intent.putExtra("pos", position);
                 startActivity(intent);
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RESULT_OK){
+            movies.remove(data.getIntExtra("pos", 0));
+            adapter.notifyDataSetChanged();
+
+
+        }
+    }
+
+    public void createFile(ArrayList movies) throws Exception{
+
+        String moviesString = movies.toString();
+
+        FileOutputStream fos = openFileOutput("movies.txt", MODE_PRIVATE);
+
+        fos.write(moviesString.getBytes());
+        fos.close();
+
+    }
+
+    public ArrayList readFile() throws  Exception{
+
+        FileInputStream fis = openFileInput("movies.txt");
+
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        StringBuffer b = new StringBuffer();
+
+        while(bis.available() != 0){
+            char c =(char) bis.read();
+            b.append(c);
+
+            bis.close();
+            fis.close();
+        }
+
+
+        ArrayList savedmoives = new ArrayList(Integer.parseInt(b.toString()));
+
+        return savedmoives;
+    }
 
 
     

@@ -3,7 +3,6 @@ package com.richardpingree.multiactivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +17,7 @@ public class DetailActivity extends Activity {
     TextView movieTitle;
     TextView movieFormat;
     TextView movieGenre;
+    int pos;
     Button delBtn;
     Button launchBtn;
 
@@ -36,12 +36,21 @@ public class DetailActivity extends Activity {
         String mTitle = intent.getStringExtra("mTitle");
         String mFormat = intent.getStringExtra("mFormat");
         String mGenre = intent.getStringExtra("mGenre");
+        pos = intent.getIntExtra("pos", 0);
 
-        Log.i(TAG, "Title: " + mTitle + " Format: " + mFormat + " Genre: " + mGenre);
+        //Log.i(TAG, "Title: " + mTitle + " Format: " + mFormat + " Genre: " + mGenre);
 
         movieTitle.setText("Movie Title: " + mTitle);
         movieFormat.setText("Movie Format: " + mFormat);
         movieGenre.setText("Movie Genre: " + mGenre);
+
+    }
+
+    public void deleteMovie(View v){
+        Intent deleteintent = new Intent(this, ListActivity.class);
+        deleteintent.putExtra("pos", pos);
+        setResult(RESULT_OK, deleteintent);
+        finish();
 
     }
 
@@ -50,7 +59,7 @@ public class DetailActivity extends Activity {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, "Now in " + '\n' + movieTitle.getText().toString() + '\n' +
-        movieFormat.getText().toString() + '\n' + movieGenre.getText().toString());
+                movieFormat.getText().toString() + '\n' + movieGenre.getText().toString());
         intent.setType("text/plain");
         startActivity(intent);
 
