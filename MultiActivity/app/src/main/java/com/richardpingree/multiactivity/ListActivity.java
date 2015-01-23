@@ -28,18 +28,37 @@ public class ListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        Bundle extras = getIntent().getExtras();
+
+        String mTitle = extras.getString("mTitle");
+        String mFormat = extras.getString("mFormat");
+        String mGenre = extras.getString("mGenre");
+
         //data from Form
-        String mTitle = getIntent().getStringExtra("mTitle");
-        Log.e(TAG, "title: " + mTitle);
-        String mFormat = getIntent().getStringExtra("mFormat");
-        String mGenre = getIntent().getStringExtra("mGenre");
+//        String mTitle = getIntent().getStringExtra("mTitle");
+//        String mFormat = getIntent().getStringExtra("mFormat");
+//        String mGenre = getIntent().getStringExtra("mGenre");
+
+        Log.e(TAG, "title: " + mTitle + " format: " + mFormat + " genre: " + mGenre);
+
+        String title = mTitle;
+        String format = mFormat;
+        String genre = mGenre;
+        Movie movie = new Movie(title, format, genre);
 
 
+        Log.i(TAG, movie.toString());
 
-        movies.add(new Movie(mTitle, mFormat, mGenre));
+        movies.add(movie);
+
+        //String[] movie = new String[]{mTitle.toString(), mFormat.toString(), mGenre.toString()};
+        Log.i(TAG, "Movie Array: " + movies.toString());
+        //String movieString = movie.toString();
+        //Log.i(TAG, "Movie String: " + movieString);
+
+       // movies.add(new Movie(movieString));
 
         Log.e(TAG, "list output" + movies.toString());
-
         list = (ListView)findViewById(R.id.listView);
 
         ArrayAdapter<Movie> adapter = new ArrayAdapter<Movie>(this, android.R.layout.simple_list_item_1, movies);

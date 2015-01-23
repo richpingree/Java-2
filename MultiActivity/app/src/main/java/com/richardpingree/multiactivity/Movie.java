@@ -25,6 +25,11 @@ public class Movie implements Serializable {
         mGenre = genre;
     }
 
+    public Movie() {
+
+    }
+
+
     public String getTitle(){
         return mTitle;
     }
