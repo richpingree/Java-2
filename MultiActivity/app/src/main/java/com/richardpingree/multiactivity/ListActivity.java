@@ -22,7 +22,8 @@ public class ListActivity extends ActionBarActivity {
     public static final String TAG = "ListActivity";
 
 
-    public ArrayList<Movie> movies = new ArrayList<Movie>();
+    //public ArrayList<Movie> movies = new ArrayList<Movie>();
+    public ArrayList<Movie> movies;
     ArrayAdapter<Movie> adapter;
 
 
@@ -51,7 +52,7 @@ public class ListActivity extends ActionBarActivity {
 
 
         //Log.i(TAG, movie.toString());
-
+        movies = new ArrayList<Movie>();
         movies.add(movie);
 
         //Log.i(TAG, "Movie Array: " + movies.toString());
