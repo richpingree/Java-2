@@ -58,6 +58,7 @@ public class DetailFragment extends Fragment {
         player9 = (TextView)rootView.findViewById(R.id.txtplayer9);
 
         loadTeams();
+        //determines what info is displayed by spinner selected value
         switch (secNum){
             case 0:
                 selectedTeam = Teams.get(secNum);
@@ -78,6 +79,7 @@ public class DetailFragment extends Fragment {
                 selectedTeam = Teams.get(secNum);
                 break;
         }
+        //sets text from team objects within loadTeams method
         player1.setText("Player 1: " + selectedTeam.getmPlayer1());
         player2.setText("Player 2: " + selectedTeam.getmPlayer2());
         player3.setText("Player 3: " + selectedTeam.getmPlayer3());
@@ -90,6 +92,7 @@ public class DetailFragment extends Fragment {
         return rootView;
     }
 
+    //creates objects of each team and sets the player names
     public void loadTeams(){
 
         Team team1 = new Team();

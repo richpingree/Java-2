@@ -1,7 +1,7 @@
 package com.richardpingree.spinner;
 
 /**
- * Created by richardpingree on 1/28/15.
+ * Created by Richard Pingree on 1/28/15.
  */
 public class Team{
 
