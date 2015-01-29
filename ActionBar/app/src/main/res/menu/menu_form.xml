@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context="com.richardpingree.actionbar.FormActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
@@ -9,8 +9,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_form"
+        android:id="@+id/action_add"
         android:orderInCategory="101"
-        android:title="@string/action_form"
+        android:title="Add Item"
+        app:showAsAction='always'
         />
 </menu>

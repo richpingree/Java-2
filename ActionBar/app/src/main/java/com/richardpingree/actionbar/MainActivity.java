@@ -1,9 +1,14 @@
 package com.richardpingree.actionbar;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.richardpingree.actionbar.fragments.mainFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by Richard Pingree on 1/27/15.
@@ -12,10 +17,23 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
+    public static final String TAG = "MainActivity.TAG";
+    private static final String ADDITEMREQUEST = "com.richardpingree.actionbar.Add";
+
+    public ArrayList<Items> itemList = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState == null){
+
+            mainFragment frag = mainFragment.newInstance();
+
+            getFragmentManager().beginTransaction().replace(R.id.container, frag, mainFragment.TAG).commit();
+        }
     }
 
 
@@ -28,16 +46,27 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId() ){
+            case R.id.action_form:
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                startActivity(intent);
+
+                break;
+
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void startActivityForResult(Intent intent, String data) {
+
+    }
+
+//    protected void startActivityForResults(int requestCode, int resultCode, Intent data) {
+//
+//    }
+
 }
