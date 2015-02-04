@@ -11,9 +11,11 @@ import android.widget.ArrayAdapter;
 
 import org.apache.commons.io.IOUtils;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Richard Pingree on 2/3/15.
@@ -24,7 +26,7 @@ public class ArtistListFragment extends ListFragment {
 
     String apiData;
 
-    List<Artist> artists;
+    ArrayList<Artist> artists;
 
     public static ArtistListFragment newInstance(){
         ArtistListFragment frag = new ArtistListFragment();
@@ -47,6 +49,8 @@ public class ArtistListFragment extends ListFragment {
                 //Log.e(TAG, "Invalid Search" + inputText);
 
             }
+        }else{
+
         }
     }
 
@@ -89,8 +93,14 @@ public class ArtistListFragment extends ListFragment {
 
         @Override
         protected void onPostExecute(String results) {
+            apiData = results;
+            try{
+                createFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            artists = JsonParser.parseResults(results);
+            artists = (ArrayList<Artist>) JsonParser.parseResults(results);
             Log.i(TAG, "artists: " + artists.toString());
             displayList();
         }
@@ -100,4 +110,15 @@ public class ArtistListFragment extends ListFragment {
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, artists);
         setListAdapter(adapter);
     }
+
+    public void createFile() throws IOException{
+        FileOutputStream fos = getActivity().openFileOutput("apidata.txt", Context.MODE_PRIVATE);
+        fos.write(apiData.getBytes());
+        fos.close();
+    }
+
+    public void readFile() throws IOException{
+        
+    }
+
 }

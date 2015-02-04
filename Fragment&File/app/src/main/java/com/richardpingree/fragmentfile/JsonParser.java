@@ -19,12 +19,16 @@ public class JsonParser {
 
         try{
             JSONArray ar = new JSONArray(results);
-            List<Artist> artistList = new ArrayList<>();
+            ArrayList<Artist> artistList = new ArrayList<Artist>();
 
             for(int i = 0; i<ar.length(); i++){
                 JSONObject obj = ar.getJSONObject(i);
                 Artist artist = new Artist();
                 artist.setArtistName(obj.getString("name"));
+                artist.setArtistGenre(obj.getString("genre"));
+                artist.setArtistLabel(obj.getString("label"));
+                artist.setArtistCity(obj.getString("city"));
+                artist.setArtistState(obj.getString("state"));
 
                 artistList.add(artist);
             }
