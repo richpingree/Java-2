@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 
 import org.apache.commons.io.IOUtils;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -118,7 +120,16 @@ public class ArtistListFragment extends ListFragment {
     }
 
     public void readFile() throws IOException{
-        
+        FileInputStream fis = getActivity().openFileInput("apidata.txt");
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        StringBuffer b = new StringBuffer();
+        while (bis.available() != 0){
+            char c = (char) bis.read();
+            b.append(c);
+        }
+        apiData = b.toString();
+        bis.close();
+        fis.close();
     }
 
 }
