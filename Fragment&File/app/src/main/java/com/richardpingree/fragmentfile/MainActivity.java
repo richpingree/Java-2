@@ -2,6 +2,7 @@ package com.richardpingree.fragmentfile;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by Richard Pingree on 2/3/15.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ArtistListFragment.UserListener{
 
     public static final String TAG = "MainActivity.TAG";
 
@@ -42,16 +43,16 @@ public class MainActivity extends ActionBarActivity {
                 userText = (EditText) findViewById(R.id.editText);
                 inputText = userText.getText().toString();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("userInput", inputText);
-
-
+                Log.i(TAG, inputText);
 
             }
         });
     }
     //Interface methods
-
+    @Override
+    public String getInputText(){
+        return inputText;
+    }
 
 
     @Override

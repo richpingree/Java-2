@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Richard Pingree on 2/3/15.
@@ -15,7 +14,7 @@ public class JsonParser {
 
     public static final String TAG = "JsonParser.TAG";
 
-    public static List<Artist> parseResults(String results){
+    public static ArrayList<Artist> parseResults(String results){
 
         try{
             JSONArray ar = new JSONArray(results);

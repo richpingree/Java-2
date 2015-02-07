@@ -1,5 +1,6 @@
 package com.richardpingree.fragmentfile;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -27,8 +28,15 @@ public class ArtistListFragment extends ListFragment {
     public static final String TAG = "ArtistListFragment.TAG";
 
     String apiData;
-
+    String inputText;
+    private UserListener mListener;
     ArrayList<Artist> artists;
+
+    public interface UserListener{
+
+        //Interface methods
+        String getInputText();
+    }
 
     public static ArtistListFragment newInstance(){
         ArtistListFragment frag = new ArtistListFragment();
@@ -36,15 +44,29 @@ public class ArtistListFragment extends ListFragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+//        inputText = getArguments().getString("userInput");
+//        Log.i(TAG, inputText);
+
+        if(activity instanceof UserListener) {
+            mListener = (UserListener) activity;
+        } else {
+            throw new IllegalArgumentException("Containing activity must implement UserListener interface");
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//
         if (isOnline()) {
             try {
                 String baseURL = "http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs&name=";
-                URL queryURL = new URL(baseURL + "journey");
-                //URL queryURL = new URL(baseURL + inputText);
+                //URL queryURL = new URL(baseURL);
+                URL queryURL = new URL(baseURL + inputText);
                 new myTask().execute(queryURL);
+
 
 
             } catch (Exception e) {
@@ -52,6 +74,17 @@ public class ArtistListFragment extends ListFragment {
 
             }
         }else{
+            try{
+                readFile();
+                if(apiData != null){
+                    artists = (ArrayList<Artist>) JsonParser.parseResults(apiData);
+                    displayList();
+                }else{
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
     }
