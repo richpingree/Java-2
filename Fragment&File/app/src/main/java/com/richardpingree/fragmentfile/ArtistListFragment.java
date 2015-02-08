@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
 
@@ -29,10 +30,11 @@ public class ArtistListFragment extends ListFragment {
 
     public static final String TAG = "ArtistListFragment.TAG";
 
+    private static final String ARG_SEARCH = "ArtistListFragment.ARG_SEARCH";
 
-    public Context context;
+    //public Context context;
     public String apiData;
-    public String inputText;
+   // public String inputText;
     private OnItemClickListener mListener;
     ArrayList<Artist> artists;
 
@@ -47,8 +49,12 @@ public class ArtistListFragment extends ListFragment {
 
     }
 
-    public static ArtistListFragment newInstance(){
+    public static ArtistListFragment newInstance(String userInput){
         ArtistListFragment frag = new ArtistListFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARG_SEARCH, userInput);
+        frag.setArguments(args);
 
         return frag;
     }
@@ -68,12 +74,14 @@ public class ArtistListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
 //
         if (isOnline()) {
             try {
                 String baseURL = "http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs&name=";
-                URL queryURL = new URL(baseURL);
-                //URL queryURL = new URL(baseURL + mListener);
+                //URL queryURL = new URL(baseURL);
+                URL queryURL = new URL(baseURL + args.getString(ARG_SEARCH));
                 new myTask().execute(queryURL);
 
 
@@ -83,12 +91,15 @@ public class ArtistListFragment extends ListFragment {
 
             }
         }else{
+            Toast.makeText(getActivity(), "Please connect to the Internet!", Toast.LENGTH_LONG).show();
+
             try{
                 readFile();
                 if(apiData != null){
                     artists = (ArrayList<Artist>) JsonParser.parseResults(apiData);
                     displayList();
                 }else{
+                    Toast.makeText(getActivity(), "File not found!", Toast.LENGTH_LONG).show();
 
                 }
             } catch (IOException e) {
@@ -148,7 +159,7 @@ public class ArtistListFragment extends ListFragment {
         }
     }
     //creates List
-    private void displayList() {
+    public void displayList() {
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, artists);
         setListAdapter(adapter);
     }

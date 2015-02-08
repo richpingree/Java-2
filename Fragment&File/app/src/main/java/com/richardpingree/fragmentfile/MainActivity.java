@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Richard Pingree on 2/3/15.
  */
-public class MainActivity extends ActionBarActivity implements ArtistListFragment.OnItemClickListener{
+public class MainActivity extends ActionBarActivity implements ArtistListFragment.OnItemClickListener, ArtistListFragment.ActivityCommunicator{
 
     public static final String TAG = "MainActivity.TAG";
 
@@ -30,10 +30,12 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState == null){
-            ArtistListFragment frag = ArtistListFragment.newInstance();
-            getFragmentManager().beginTransaction().replace(R.id.container1, frag, ArtistListFragment.TAG).commit();
-        }
+//        if(savedInstanceState == null){
+//            ArtistListFragment frag = ArtistListFragment.newInstance();
+//            getFragmentManager().beginTransaction().replace(R.id.container1, frag, ArtistListFragment.TAG).commit();
+//        }
+
+        dataToFrag(inputText);
 
         userText = (EditText) findViewById(R.id.editText);
         btn = (Button) findViewById(R.id.button);
@@ -42,20 +44,12 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
             @Override
             public void onClick(View v) {
                 inputText = userText.getText().toString();
-               //ArtistListFragment.ActivityCommunicator.dataToFrag();
-
-
                 Log.i(TAG, inputText);
+                dataToFrag(inputText);
 
             }
         });
     }
-    //Interface methods
-//    @Override
-//     public void dataToFrag(String userInput) {
-//        inputText = userText.getText().toString();
-//    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,7 +76,7 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
 
     @Override
     public void displayArtist(String name, String genre, String label, String city, String state) {
-        Log.i(TAG, "Displaying: " + name + genre + label + city + state);
+        Log.i(TAG, "Displaying: " + name + " " + genre + " " + label + " " + city + " " + state);
 
         DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
 
@@ -93,5 +87,18 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
             frag.setDisplayText(name, genre, label, city, state);
         }
 
+    }
+
+    @Override
+    public void dataToFrag(String userInput) {
+       // userInput = userText.getText().toString();
+        ArtistListFragment frag = (ArtistListFragment) getFragmentManager().findFragmentByTag(ArtistListFragment.TAG);
+
+        if(frag == null){
+            frag = ArtistListFragment.newInstance(userInput);
+            getFragmentManager().beginTransaction().replace(R.id.container1, frag, ArtistListFragment.TAG).commit();
+        }else{
+            frag.displayList();
+        }
     }
 }
