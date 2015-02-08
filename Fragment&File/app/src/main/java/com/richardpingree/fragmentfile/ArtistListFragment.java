@@ -8,7 +8,9 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.apache.commons.io.IOUtils;
 
@@ -27,32 +29,39 @@ public class ArtistListFragment extends ListFragment {
 
     public static final String TAG = "ArtistListFragment.TAG";
 
-    String apiData;
-    String inputText;
-    private UserListener mListener;
+
+    public Context context;
+    public String apiData;
+    public String inputText;
+    private OnItemClickListener mListener;
     ArrayList<Artist> artists;
 
-    public interface UserListener{
+    public interface ActivityCommunicator{
 
         //Interface methods
-        String getInputText();
+        void dataToFrag(String userInput);
+    }
+    //Interface for selected list item
+    public interface OnItemClickListener{
+        public void displayArtist(String name, String genre, String label, String city, String state);
+
     }
 
     public static ArtistListFragment newInstance(){
         ArtistListFragment frag = new ArtistListFragment();
+
         return frag;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        inputText = getArguments().getString("userInput");
-//        Log.i(TAG, inputText);
 
-        if(activity instanceof UserListener) {
-            mListener = (UserListener) activity;
+        if(activity instanceof OnItemClickListener) {
+
+            mListener = (OnItemClickListener) activity;
         } else {
-            throw new IllegalArgumentException("Containing activity must implement UserListener interface");
+            throw new IllegalArgumentException("Containing activity must implement OnItemClickListener interface");
         }
     }
 
@@ -63,8 +72,8 @@ public class ArtistListFragment extends ListFragment {
         if (isOnline()) {
             try {
                 String baseURL = "http://api.artistlink.com/home/accounts.json?auth_token=5xVzCSGTz4yNaaxyJbcs&name=";
-                //URL queryURL = new URL(baseURL);
-                URL queryURL = new URL(baseURL + inputText);
+                URL queryURL = new URL(baseURL);
+                //URL queryURL = new URL(baseURL + mListener);
                 new myTask().execute(queryURL);
 
 
@@ -111,8 +120,6 @@ public class ArtistListFragment extends ListFragment {
                 try{
                     URLConnection conn =  queryURL.openConnection();
                     jsonString = IOUtils.toString(conn.getInputStream());
-                    //jsonString = jsonString.replace("[","");
-                    //jsonString = jsonString.replace("]","");
                     break;
                 }catch (Exception e){
                     Log.e(TAG, "Could not establish a connection to " + queryURL.toString());
@@ -140,18 +147,35 @@ public class ArtistListFragment extends ListFragment {
             displayList();
         }
     }
-
+    //creates List
     private void displayList() {
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, artists);
         setListAdapter(adapter);
     }
+    //info for the selected list item
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
 
+        Artist selectedArtist = artists.get(position);
+        String name = selectedArtist.artistName;
+        String genre = selectedArtist.artistGenre;
+        String label = selectedArtist.artistLabel;
+        String city = selectedArtist.artistCity;
+        String state = selectedArtist.artistState;
+
+        mListener.displayArtist(name, genre, label, city, state);
+
+
+
+    }
+    //creates file
     public void createFile() throws IOException{
         FileOutputStream fos = getActivity().openFileOutput("apidata.txt", Context.MODE_PRIVATE);
         fos.write(apiData.getBytes());
         fos.close();
     }
-
+    //reads file
     public void readFile() throws IOException{
         FileInputStream fis = getActivity().openFileInput("apidata.txt");
         BufferedInputStream bis = new BufferedInputStream(fis);

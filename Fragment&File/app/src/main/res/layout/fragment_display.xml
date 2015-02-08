@@ -11,7 +11,7 @@
         android:id="@+id/nameText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_marginTop="15dp"
         android:textColor="#000000" />
 
@@ -22,7 +22,7 @@
         android:id="@+id/genreText"
         android:layout_below="@+id/nameText"
         android:layout_centerHorizontal="true"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_marginTop="15dp"
         android:textColor="#000000" />
 
@@ -33,7 +33,7 @@
         android:id="@+id/labelText"
         android:layout_below="@+id/genreText"
         android:layout_centerHorizontal="true"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_marginTop="15dp"
         android:textColor="#000000" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/cityText"
         android:layout_below="@+id/labelText"
         android:layout_centerHorizontal="true"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_marginTop="15dp"
         android:textColor="#000000" />
 
@@ -55,7 +55,7 @@
         android:id="@+id/stateText"
         android:layout_below="@+id/cityText"
         android:layout_centerHorizontal="true"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_marginTop="15dp"
         android:textColor="#000000" />
 </RelativeLayout>

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Richard Pingree on 2/3/15.
  */
-public class MainActivity extends ActionBarActivity implements ArtistListFragment.UserListener{
+public class MainActivity extends ActionBarActivity implements ArtistListFragment.OnItemClickListener{
 
     public static final String TAG = "MainActivity.TAG";
 
@@ -35,13 +35,15 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
             getFragmentManager().beginTransaction().replace(R.id.container1, frag, ArtistListFragment.TAG).commit();
         }
 
+        userText = (EditText) findViewById(R.id.editText);
         btn = (Button) findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                userText = (EditText) findViewById(R.id.editText);
                 inputText = userText.getText().toString();
+               //ArtistListFragment.ActivityCommunicator.dataToFrag();
+
 
                 Log.i(TAG, inputText);
 
@@ -49,10 +51,10 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
         });
     }
     //Interface methods
-    @Override
-    public String getInputText(){
-        return inputText;
-    }
+//    @Override
+//     public void dataToFrag(String userInput) {
+//        inputText = userText.getText().toString();
+//    }
 
 
     @Override
@@ -75,5 +77,21 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void displayArtist(String name, String genre, String label, String city, String state) {
+        Log.i(TAG, "Displaying: " + name + genre + label + city + state);
+
+        DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
+
+        if(frag == null){
+            frag = DisplayFragment.newInstance(name, genre, label, city, state);
+            getFragmentManager().beginTransaction().replace(R.id.container2, frag, DisplayFragment.TAG).commit();
+        }else {
+            frag.setDisplayText(name, genre, label, city, state);
+        }
+
     }
 }

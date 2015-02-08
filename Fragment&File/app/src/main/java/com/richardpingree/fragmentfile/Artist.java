@@ -1,7 +1,7 @@
 package com.richardpingree.fragmentfile;
 
 /**
- * Created by richardpingree on 2/3/15.
+ * Created by Richard Pingree on 2/3/15.
  */
 public class Artist {
 
