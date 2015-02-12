@@ -60,7 +60,7 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
 
         if(frag == null){
             frag = DisplayFragment.newInstance(name, genre, label, city, state);
-            getFragmentManager().beginTransaction().replace(R.id.container2, frag, DisplayFragment.TAG).commit();
+            getFragmentManager().beginTransaction().replace(R.id.container1, frag, DisplayFragment.TAG).commit();
         }else {
             frag.setDisplayText(name, genre, label, city, state);
         }
@@ -74,7 +74,7 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
 
         if(frag == null){
             frag = ArtistListFragment.newInstance(userInput);
-            getFragmentManager().beginTransaction().replace(R.id.container1, frag, ArtistListFragment.TAG).commit();
+            getFragmentManager().beginTransaction().replace(R.id.container2, frag, ArtistListFragment.TAG).commit();
         }else{
             frag.displayList();
         }

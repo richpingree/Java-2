@@ -161,6 +161,7 @@ public class ArtistListFragment extends ListFragment {
     //creates List
     public void displayList() {
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, artists);
+
         setListAdapter(adapter);
     }
     //info for the selected list item
