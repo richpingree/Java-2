@@ -1,5 +1,6 @@
 package com.richardpingree.fragmentfile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -19,6 +20,8 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
 
     public static final String TAG = "MainActivity.TAG";
 
+    private SharedPreferences settings;
+
     EditText userText;
     Button btn;
 
@@ -29,6 +32,9 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //settings = getPreferences(MODE_PRIVATE);
+
 
 //        if(savedInstanceState == null){
 //            ArtistListFragment frag = ArtistListFragment.newInstance();
@@ -96,10 +102,18 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+//    public void viewSettings(View v){
+//        SettingsFragment sFrag = new SettingsFragment();
+//        getFragmentManager().beginTransaction().replace(android.R.id.content, sFrag, SettingsFragment.TAG).commit();
+//
+//
+//    }
 
 }
