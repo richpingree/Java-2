@@ -123,6 +123,8 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
 
         getApplicationContext().deleteFile(FILENAME);
 
+        dataToFrag(inputText);
+
     }
 
 
