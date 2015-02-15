@@ -1,5 +1,7 @@
 package com.richardpingree.fragmentfile;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +21,9 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity implements ArtistListFragment.OnItemClickListener, ArtistListFragment.ActivityCommunicator{
 
     public static final String TAG = "MainActivity.TAG";
+    private static final String FILENAME = "apidata.txt";
+
+    private static final int REQUEST_CODE = 0;
 
     private SharedPreferences settings;
 
@@ -33,7 +38,6 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //settings = getPreferences(MODE_PRIVATE);
 
 
 //        if(savedInstanceState == null){
@@ -103,17 +107,23 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+            FragmentManager manager =getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            SettingsFragment frag = new SettingsFragment();
+            transaction.replace(R.id.container1, frag);
+            transaction.commit();
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-//    public void viewSettings(View v){
-//        SettingsFragment sFrag = new SettingsFragment();
-//        getFragmentManager().beginTransaction().replace(android.R.id.content, sFrag, SettingsFragment.TAG).commit();
-//
-//
-//    }
+    public void deleteCache() {
+
+        getApplicationContext().deleteFile(FILENAME);
+
+    }
+
 
 }

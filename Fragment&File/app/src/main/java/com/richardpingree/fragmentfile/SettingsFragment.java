@@ -1,6 +1,8 @@
 package com.richardpingree.fragmentfile;
 
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 /**
@@ -8,7 +10,7 @@ import android.preference.PreferenceFragment;
  */
 public class SettingsFragment extends PreferenceFragment {
 
-    public static final String TAG = "SettingsFragment";
+    public static final String TAG = "SettingsFragment.TAG";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,5 +23,18 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Preference clearData = findPreference("PREF_CLICK");
+        clearData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((MainActivity) getActivity()).deleteCache();
+
+
+                return true;
+            }
+        });
+
+        ListPreference colorSelect = (ListPreference) findPreference("PRE_LIST");
     }
 }

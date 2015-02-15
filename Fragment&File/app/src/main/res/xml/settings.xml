@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:key="PREF_LIST"
-        android:summary="List of color choices for text"
-        android:title="Choose A Color"
-        android:entries="@array/Colors"
-        android:entryValues="@array/ColorValues"
-        android:defaultValue="Item 1"/>
+    <PreferenceCategory android:title = "App Preferences">
+
+        <Preference
+            android:key="PREF_CLICK"
+            android:summary="clickable item"
+            android:title="Clear Data"/>
+
+        <ListPreference
+            android:key="PREF_LIST"
+            android:summary="List of color choices for text"
+            android:title="Choose A Color"
+            android:entries="@array/Colors"
+            android:entryValues="@array/ColorValues"
+            android:defaultValue="Item 1"/>
+    </PreferenceCategory>
+
+
 
 </PreferenceScreen>
