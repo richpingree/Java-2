@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <PreferenceCategory android:title = "App Preferences">
 
         <Preference
             android:key="PREF_CLICK"
-            android:summary="clickable item"
+            android:summary="Clears Saved Data!"
             android:title="Clear Data"/>
 
         <ListPreference
@@ -14,7 +15,7 @@
             android:title="Choose A Color"
             android:entries="@array/Colors"
             android:entryValues="@array/ColorValues"
-            android:defaultValue="Item 1"/>
+            android:defaultValue="#000000"/>
     </PreferenceCategory>
 
 

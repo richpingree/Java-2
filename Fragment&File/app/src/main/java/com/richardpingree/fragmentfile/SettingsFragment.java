@@ -35,6 +35,17 @@ public class SettingsFragment extends PreferenceFragment {
             }
         });
 
-        ListPreference colorSelect = (ListPreference) findPreference("PRE_LIST");
+        final ListPreference colorSelect = (ListPreference) findPreference("PREF_LIST");
+
+        colorSelect.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                int position = colorSelect.getEntries().length;
+
+                ((MainActivity) getActivity()).changeColor(position);
+                return true;
+            }
+        });
     }
 }

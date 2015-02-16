@@ -110,7 +110,7 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
             FragmentManager manager =getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             SettingsFragment frag = new SettingsFragment();
-            transaction.replace(R.id.container1, frag);
+            transaction.replace(R.id.container2, frag);
             transaction.commit();
 
             return true;
@@ -128,4 +128,34 @@ public class MainActivity extends ActionBarActivity implements ArtistListFragmen
     }
 
 
+    public void changeColor(int position) {
+
+        DisplayFragment frag = (DisplayFragment) getFragmentManager().findFragmentByTag(DisplayFragment.TAG);
+        switch (position){
+            case 1:
+                frag.nameTxt.setTextColor(getResources().getColor(R.color.black));
+                frag.genreTxt.setTextColor(getResources().getColor(R.color.black));
+                frag.labelTxt.setTextColor(getResources().getColor(R.color.black));
+                frag.cityTxt.setTextColor(getResources().getColor(R.color.black));
+                frag.stateTxt.setTextColor(getResources().getColor(R.color.black));
+                break;
+            case 2:
+                frag.nameTxt.setTextColor(getResources().getColor(R.color.white));
+                frag.genreTxt.setTextColor(getResources().getColor(R.color.white));
+                frag.labelTxt.setTextColor(getResources().getColor(R.color.white));
+                frag.cityTxt.setTextColor(getResources().getColor(R.color.white));
+                frag.stateTxt.setTextColor(getResources().getColor(R.color.white));
+                break;
+            case 3:
+                frag.nameTxt.setTextColor(getResources().getColor(R.color.yellow));
+                frag.genreTxt.setTextColor(getResources().getColor(R.color.yellow));
+                frag.labelTxt.setTextColor(getResources().getColor(R.color.yellow));
+                frag.cityTxt.setTextColor(getResources().getColor(R.color.yellow));
+                frag.stateTxt.setTextColor(getResources().getColor(R.color.yellow));
+                break;
+            default:
+                break;
+        }
+
+    }
 }

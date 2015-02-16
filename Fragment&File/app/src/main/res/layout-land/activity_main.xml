@@ -27,8 +27,7 @@
         android:layout_below="@+id/editText"
         android:layout_alignRight="@+id/button"
         android:layout_alignEnd="@+id/button"
-        android:id="@+id/container1"
-        android:background="@color/green">
+        android:id="@+id/container1">
 
         </LinearLayout>
 

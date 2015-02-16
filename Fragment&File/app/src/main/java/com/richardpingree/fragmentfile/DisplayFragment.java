@@ -71,4 +71,5 @@ public class DisplayFragment extends Fragment {
         stateTxt = (TextView) getView().findViewById(R.id.stateText);
         stateTxt.setText("State: " + state);
     }
+
 }
