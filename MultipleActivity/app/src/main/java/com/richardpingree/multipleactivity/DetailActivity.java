@@ -50,4 +50,6 @@ public class DetailActivity extends Activity implements DetailFragment.DetailLis
         setResult(RESULT_OK, returnIntent);
         finish();
     }
+
+
 }

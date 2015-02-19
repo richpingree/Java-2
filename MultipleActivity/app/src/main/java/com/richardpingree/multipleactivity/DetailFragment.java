@@ -59,15 +59,17 @@ public class DetailFragment extends Fragment {
         textView = (TextView) getView().findViewById(R.id.detailPower);
         textView.setText(mListener.getHero().getPower());
 
-        if(mListener.getDelete()> 0){
-            Button delBtn = (Button) getView().findViewById(R.id.deleteButton);
-            delBtn.setVisibility(View.VISIBLE);
-            delBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    mListener.deleteEntry();
-                }
-            });
-        }
+          if(mListener.getDelete()> 0){
+              Button delBtn = (Button) getView().findViewById(R.id.deleteButton);
+              delBtn.setVisibility(View.VISIBLE);
+              delBtn.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      mListener.deleteEntry();
+                  }
+              });
+          }
+
+
     }
 }
