@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +31,8 @@ public class MainFragment extends Fragment {
         public ArrayList<Hero> getHeroes();
         public void addHero();
         public void goToSite();
+        public void createFile() throws IOException;
+        public void readFile() throws IOException;
 
     }
 
@@ -100,7 +103,12 @@ public class MainFragment extends Fragment {
 
     }
 
-    public void updateList(){
+    public void updateList() throws IOException {
+        try {
+            mListener.createFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ListView heroList = (ListView) getView().findViewById(R.id.heroList);
         BaseAdapter adapter = (BaseAdapter) heroList.getAdapter();
         adapter.notifyDataSetChanged();

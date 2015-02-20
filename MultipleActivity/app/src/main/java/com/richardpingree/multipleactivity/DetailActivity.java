@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * Created by richardpingree on 2/17/15.
+ * Created by Richard Pingree on 2/17/15.
  */
 public class DetailActivity extends Activity implements DetailFragment.DetailListener {
 

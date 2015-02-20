@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Created by richardpingree on 2/17/15.
+ * Created by Richard Pingree on 2/17/15.
  */
 public class DetailFragment extends Fragment {
 

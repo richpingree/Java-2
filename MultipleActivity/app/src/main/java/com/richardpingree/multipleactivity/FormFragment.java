@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Created by richardpingree on 2/19/15.
+ * Created by Richard Pingree on 2/19/15.
  */
 public class FormFragment extends Fragment implements View.OnClickListener {
 

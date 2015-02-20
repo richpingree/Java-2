@@ -1,15 +1,24 @@
 package com.richardpingree.multipleactivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONArray;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Created by Richard Pingree on 2/17/15.
+ */
 public class MainActivity extends Activity implements MainFragment.HeroListener {
 
 
@@ -68,7 +77,11 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
         if(resultCode == Activity.RESULT_OK && requestCode == DELETREQUEST){
             mHeroDataList.remove(data.getIntExtra(DELETEHEROEXTRA,0));
             MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
-            mf.updateList();
+            try {
+                mf.updateList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
             Hero newHero = new Hero();
 
@@ -79,7 +92,11 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
 
             mHeroDataList.add(newHero);
             MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
-            mf.updateList();
+            try {
+                mf.updateList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -100,7 +117,8 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
     }
 
     @Override
-    public ArrayList<Hero> getHeroes() {
+    public ArrayList<Hero> getHeroes(){
+
         return mHeroDataList;
     }
 
@@ -114,6 +132,30 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
         String website = "http://www.superherodb.com";
         Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
         startActivity(webIntent);
+    }
+
+    public void createFile() throws IOException{
+        FileOutputStream fos = openFileOutput("savedData", Context.MODE_PRIVATE);
+        JSONArray ar = new JSONArray(mHeroDataList);
+        String json = ar.toString();
+
+        fos.write(json.getBytes());
+        fos.close();
+        }
+
+    public void readFile() throws IOException{
+        FileInputStream fis = openFileInput("SavedData");
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        StringBuffer b = new StringBuffer();
+        while(bis.available() != 0){
+            char c = (char) bis.read();
+            b.append(c);
+        }
+        String json = b.toString();
+        bis.close();
+        fis.close();
+
+
     }
 
 
