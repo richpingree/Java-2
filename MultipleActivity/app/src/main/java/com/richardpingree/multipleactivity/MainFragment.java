@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class MainFragment extends Fragment {
         public void viewHero(int position);
         public void deleteHero(int position);
         public ArrayList<Hero> getHeroes();
+        public void addHero();
+        public void goToSite();
 
     }
 
@@ -67,12 +70,29 @@ public class MainFragment extends Fragment {
             }
         });
 
-        heroListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+       heroListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
 
+           @Override
+           public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+               mListener.deleteHero(position);
+               return true;
+           }
+       });
+
+
+        Button addBtn = (Button)getView().findViewById(R.id.addHero);
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mListener.deleteHero(position);
-                return true;
+            public void onClick(View v) {
+                mListener.addHero();
+            }
+        });
+
+        Button webBtn = (Button)getView().findViewById(R.id.toWeb);
+        webBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.goToSite();
             }
         });
 

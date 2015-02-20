@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class Hero implements Serializable {
 
-    private String mFirst;
-    private String mLast;
-    private String mAlias;
-    private String mPower;
+    public String mFirst;
+    public String mLast;
+    public String mAlias;
+    public String mPower;
 
     public Hero(){
         mFirst = "";

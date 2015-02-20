@@ -2,6 +2,7 @@ package com.richardpingree.multipleactivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,9 +12,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements MainFragment.HeroListener {
 
+
     private final String TAG = "MainActivity.TAG";
 
-    public static  int DELETREQUEST = 1;
+    private static final int ADDREQUEST = 1;
+    public static String ADDHEROEXTRAFIRSTNAME = "First Name";
+    public static String ADDHEROEXTRALASTNAME = "Last Name";
+    public static String ADDHEROEXTRAALIAS = "Alias";
+    public static String ADDHEROEXTRAPOWER = "Power";
+    public static  int DELETREQUEST = 0;
     public static String  DELETEHEROEXTRA = "Delete Hero";
 
     private ArrayList<Hero> mHeroDataList;
@@ -27,10 +34,10 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
         }
 
         mHeroDataList = new ArrayList<Hero>();
-        mHeroDataList.add(new Hero("Clark", "Kent", "Superman", "Heat Vision"));
-        mHeroDataList.add(new Hero("Bruce", "Wayne", "Batman", "Agility"));
-        mHeroDataList.add(new Hero("Barry", "Allen", "The Flash", "Super Speed"));
-        mHeroDataList.add(new Hero("Oliver", "Queen", "Green Arrow", "Archery"));
+//        mHeroDataList.add(new Hero("Clark", "Kent", "Superman", "Heat Vision"));
+//        mHeroDataList.add(new Hero("Bruce", "Wayne", "Batman", "Agility"));
+//        mHeroDataList.add(new Hero("Barry", "Allen", "The Flash", "Super Speed"));
+//        mHeroDataList.add(new Hero("Oliver", "Queen", "Green Arrow", "Archery"));
     }
 
 
@@ -62,6 +69,17 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
             mHeroDataList.remove(data.getIntExtra(DELETEHEROEXTRA,0));
             MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
             mf.updateList();
+        }else if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
+            Hero newHero = new Hero();
+
+            newHero.mFirst = data.getStringExtra(ADDHEROEXTRAFIRSTNAME);
+            newHero.mLast = data.getStringExtra(ADDHEROEXTRALASTNAME);
+            newHero.mAlias = data.getStringExtra(ADDHEROEXTRAALIAS);
+            newHero.mPower = data.getStringExtra(ADDHEROEXTRAPOWER);
+
+            mHeroDataList.add(newHero);
+            MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
+            mf.updateList();
         }
     }
 
@@ -85,4 +103,18 @@ public class MainActivity extends Activity implements MainFragment.HeroListener 
     public ArrayList<Hero> getHeroes() {
         return mHeroDataList;
     }
+
+    @Override
+    public void addHero() {
+       Intent addIntent = new Intent(this, FormActivity.class);
+        startActivityForResult(addIntent, ADDREQUEST);
+    }
+
+    public void goToSite(){
+        String website = "http://www.superherodb.com";
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
+        startActivity(webIntent);
+    }
+
+
 }
