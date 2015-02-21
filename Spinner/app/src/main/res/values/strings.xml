@@ -2,12 +2,12 @@
     <string name="app_name">Spinner</string>
 
 
-    <string name="title_section1">Team 1</string>
-    <string name="title_section2">Team 2</string>
-    <string name="title_section3">Team 3</string>
-    <string name="title_section4">Team 4</string>
-    <string name="title_section5">Team 5</string>
-    <string name="title_section6">Team 6</string>
+    <string name="title_section1">Team Justice</string>
+    <string name="title_section2">Team Birds</string>
+    <string name="title_section3">Team Doom</string>
+    <string name="title_section4">Team Squad</string>
+    <string name="title_section5">Team Titans</string>
+    <string name="title_section6">Team Outsiders</string>
 
     <string name="player1">Player 1:</string>
     <string name="player2">Player 2:</string>
