@@ -1,12 +1,124 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+         <TableRow android:padding="10dp">
+             <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:id="@+id/player1Label"
+                 android:text="@string/player1" />
+             <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_weight="4"
+                 android:id="@+id/player1Txt"/>
+         </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player2Label"
+                android:text="@string/player2" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player2Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player3Label"
+                android:text="@string/player3" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player3Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player4Label"
+                android:text="@string/player4" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player4Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player5Label"
+                android:text="@string/player5" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player5Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player6Label"
+                android:text="@string/player6" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player6Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player7Label"
+                android:text="@string/player7" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player7Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player8Label"
+                android:text="@string/player8" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player8Txt"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/player9Label"
+                android:text="@string/player9" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:id="@+id/player9Txt"/>
+        </TableRow>
+
+     </TableLayout>
 
 </RelativeLayout>

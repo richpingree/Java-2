@@ -1,19 +1,15 @@
 package com.richardpingree.spinner;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
@@ -45,6 +41,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                                 getString(R.string.title_section1),
                                 getString(R.string.title_section2),
                                 getString(R.string.title_section3),
+                                getString(R.string.title_section4),
+                                getString(R.string.title_section5),
+                                getString(R.string.title_section6),
                         }),
                 this);
     }
