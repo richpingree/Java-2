@@ -57,4 +57,10 @@ public class Hero implements Serializable {
     public void setPower(){
         this.mPower = mPower;
     }
+
+    @Override
+    public String toString() {
+        return mAlias;
+    }
+
 }

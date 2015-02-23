@@ -56,13 +56,13 @@ public class MainActivity extends ActionBarActivity implements MainFragment.Hero
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK && requestCode == DELETREQUEST){
-            mHeroDataList.remove(data.getIntExtra(DELETEHEROEXTRA,0));
-            MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
-            try {
-                mf.updateList();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            mHeroDataList.remove(data.getIntExtra(DELETEHEROEXTRA,0));
+//            MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
+//            try {
+//                mf.updateList();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }else if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
             Hero newHero = new Hero();
 
@@ -91,11 +91,20 @@ public class MainActivity extends ActionBarActivity implements MainFragment.Hero
 
     @Override
     public void deleteHero(int position) {
-        Intent deleteIntent = new Intent(this, DetailActivity.class);
-        deleteIntent.putExtra(DetailActivity.HEROEXTRA, mHeroDataList.get(position));
-        deleteIntent.putExtra(DetailActivity.DELETEEXTRA, position);
-        startActivityForResult(deleteIntent, DELETREQUEST);
+        mHeroDataList.remove(position);
+        MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
+        try {
+            mf.updateList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Intent deleteIntent = new Intent(this, DetailActivity.class);
+//        deleteIntent.putExtra(DetailActivity.HEROEXTRA, mHeroDataList.get(position));
+//        deleteIntent.putExtra(DetailActivity.DELETEEXTRA, position);
+//        startActivityForResult(deleteIntent, DELETREQUEST);
     }
+
+
 
     @Override
     public ArrayList<Hero> getHeroes(){

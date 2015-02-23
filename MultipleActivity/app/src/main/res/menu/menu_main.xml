@@ -11,15 +11,15 @@
     <item
         android:id="@+id/action_add"
         android:orderInCategory="101"
-        android:title="@string/action_add">
-
+        android:title="@string/action_add"
+        app:showAsAction="always">
      </item>
 
     <item
         android:id="@+id/action_external_url"
         android:orderInCategory="102"
-        android:title="@string/external_url">
-
+        android:title="@string/external_url"
+        app:showAsAction="never">
     </item>
 
 

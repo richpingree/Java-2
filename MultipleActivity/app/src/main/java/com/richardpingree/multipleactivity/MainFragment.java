@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,13 +28,16 @@ public class MainFragment extends Fragment {
 
     private HeroListener mListener;
     private ArrayList<Hero> mHeroList;
+    HeroAdapter mAdapter;
+    private ActionMode mActionMode;
+    private int mItemSelected = -1;
 
     public interface HeroListener{
         public void viewHero(int position);
         public void deleteHero(int position);
         public ArrayList<Hero> getHeroes();
         public void addHero();
-        public void goToSite();
+        //public void goToSite();
         public void createFile() throws IOException;
         public void readFile() throws IOException;
 
@@ -62,8 +70,8 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         ListView heroListView = (ListView) getView().findViewById(R.id.heroList);
-        HeroAdapter adapter = new HeroAdapter(getActivity(), mListener.getHeroes());
-        heroListView.setAdapter(adapter);
+        mAdapter = new HeroAdapter(getActivity(), mListener.getHeroes());
+        heroListView.setAdapter(mAdapter);
 
         heroListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,7 +84,12 @@ public class MainFragment extends Fragment {
 
            @Override
            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-               mListener.deleteHero(position);
+               if(mActionMode != null){
+                   return false;
+               }
+               mItemSelected = position;
+               mActionMode = getActivity().startActionMode(mActionModeCallback);
+               //mListener.deleteHero(position);
                return true;
            }
        });
@@ -100,8 +113,6 @@ public class MainFragment extends Fragment {
 //            }
 //        });
 
-
-
     }
 
     public void updateList() throws IOException {
@@ -114,4 +125,48 @@ public class MainFragment extends Fragment {
         BaseAdapter adapter = (BaseAdapter) heroList.getAdapter();
         adapter.notifyDataSetChanged();
     }
+
+
+    public Hero getToDelete(){
+        return mAdapter.getItem(mItemSelected);
+    }
+    //Contextual Action Bar CALLBACK
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback(){
+
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            //inflates menu resource
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.itemDelete:
+                    Log.i(TAG, mAdapter.getItem(mItemSelected).toString());
+                    mListener.deleteHero(mItemSelected);
+                    mode.finish();
+
+                    return true;
+                default:
+                    return false;
+            }
+
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+
+        }
+    };
 }

@@ -5,9 +5,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -17,17 +19,20 @@ public class FormFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = "FormFragment.TAG";
 
-    EditText first, last, alias, power;
+    public EditText first, last, alias, power;
+
+
+    public Hero newHero;
 
     private FormListener mListener;
 
 
-
-    public interface FormListener{
+    public interface FormListener {
         public void addEntry(Hero newHero);
+
     }
 
-    public FormFragment(){
+    public FormFragment() {
 
     }
 
@@ -35,13 +40,12 @@ public class FormFragment extends Fragment implements View.OnClickListener {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if(activity instanceof FormListener){
+        if (activity instanceof FormListener) {
             mListener = (FormListener) activity;
-        }else{
+        } else {
             throw new IllegalArgumentException("Containing activity must implement FormListener interface");
         }
     }
-
 
 
     @Nullable
@@ -54,19 +58,24 @@ public class FormFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
 
-        Button saveBtn = (Button) getView().findViewById(R.id.saveButton);
-        saveBtn.setOnClickListener(this);
+//        Button saveBtn = (Button) getView().findViewById(R.id.saveButton);
+//        saveBtn.setVisibility(View.VISIBLE);
+//        saveBtn.setOnClickListener(this);
 
         first = (EditText) getView().findViewById(R.id.firstText);
         last = (EditText) getView().findViewById(R.id.lastText);
         alias = (EditText) getView().findViewById(R.id.aliasText);
         power = (EditText) getView().findViewById(R.id.powerText);
+
+
+
     }
 
     @Override
-      public void onClick(View v) {
-        Hero newHero = new Hero();
+    public void onClick(View v) {
+        newHero = new Hero();
 
         newHero.mFirst = first.getText().toString();
         newHero.mLast = last.getText().toString();
@@ -75,5 +84,39 @@ public class FormFragment extends Fragment implements View.OnClickListener {
 
         mListener.addEntry(newHero);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_save:
+                newHero = new Hero();
+
+                newHero.mFirst = first.getText().toString();
+                newHero.mLast = last.getText().toString();
+                newHero.mAlias = alias.getText().toString();
+                newHero.mPower = power.getText().toString();
+
+                mListener.addEntry(newHero);
+                break;
+            case R.id.action_clear:
+                first.setText("");
+                last.setText("");
+                alias.setText("");
+                power.setText("");
+
+                break;
+
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

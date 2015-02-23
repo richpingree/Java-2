@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
 
 /**
  * Created by Richard Pingree on 2/19/15.
@@ -11,6 +13,9 @@ import android.view.Menu;
 public class FormActivity extends ActionBarActivity implements FormFragment.FormListener {
 
     private final String TAG = "FormActivtiy.TAG";
+
+    Hero newHero;
+    public EditText first, last, alias, power;
 
     public FormActivity(){
 
@@ -20,8 +25,11 @@ public class FormActivity extends ActionBarActivity implements FormFragment.Form
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
+
+
         if(savedInstanceState == null){
             getFragmentManager().beginTransaction().add(R.id.container, new FormFragment()).commit();
+
         }
     }
 
@@ -38,7 +46,20 @@ public class FormActivity extends ActionBarActivity implements FormFragment.Form
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.menu_form, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
