@@ -1,13 +1,14 @@
 package com.richardpingree.multipleactivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 
 /**
  * Created by Richard Pingree on 2/19/15.
  */
-public class FormActivity extends Activity implements FormFragment.FormListener {
+public class FormActivity extends ActionBarActivity implements FormFragment.FormListener {
 
     private final String TAG = "FormActivtiy.TAG";
 
@@ -33,5 +34,11 @@ public class FormActivity extends Activity implements FormFragment.FormListener 
         returnIntent.putExtra(MainActivity.ADDHEROEXTRAPOWER, newHero.mPower);
         setResult(RESULT_OK, returnIntent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_form, menu);
+        return true;
     }
 }

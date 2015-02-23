@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.io.IOException;
@@ -82,22 +81,24 @@ public class MainFragment extends Fragment {
            }
        });
 
-
-        Button addBtn = (Button)getView().findViewById(R.id.addHero);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.addHero();
-            }
-        });
-
-        Button webBtn = (Button)getView().findViewById(R.id.toWeb);
-        webBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.goToSite();
-            }
-        });
+//
+//        Button addBtn = (Button)getView().findViewById(R.id.addHero);
+//        addBtn.setVisibility(View.VISIBLE);
+//        addBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mListener.addHero();
+//            }
+//        });
+//
+//        Button webBtn = (Button)getView().findViewById(R.id.toWeb);
+//        webBtn.setVisibility(View.VISIBLE);
+//        webBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mListener.goToSite();
+//            }
+//        });
 
 
 
