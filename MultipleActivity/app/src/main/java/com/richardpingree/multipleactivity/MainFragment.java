@@ -169,6 +169,7 @@ public class MainFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //canceled delete
+                                    mActionMode.finish();
                                 }
                             });
                     builder.show();

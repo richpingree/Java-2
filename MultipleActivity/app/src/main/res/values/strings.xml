@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MultipleActivity</string>
+    <string name="app_name">Action Bar</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
