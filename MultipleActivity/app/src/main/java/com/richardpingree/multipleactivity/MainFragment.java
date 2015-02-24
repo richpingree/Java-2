@@ -1,10 +1,11 @@
 package com.richardpingree.multipleactivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -152,9 +153,25 @@ public class MainFragment extends Fragment {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()){
                 case R.id.itemDelete:
-                    Log.i(TAG, mAdapter.getItem(mItemSelected).toString());
-                    mListener.deleteHero(mItemSelected);
-                    mode.finish();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Are you sure you want to delete " + mAdapter.getItem(mItemSelected).toString() + "?")
+                            .setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                           // Log.i(TAG, mAdapter.getItem(mItemSelected).toString());
+                            mListener.deleteHero(mItemSelected);
+                            mActionMode.finish();
+                        }
+                    })
+                            .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //canceled delete
+                                }
+                            });
+                    builder.show();
 
                     return true;
                 default:

@@ -50,12 +50,9 @@ public class MainActivity extends ActionBarActivity implements MainFragment.Hero
 //        mHeroDataList.add(new Hero("Oliver", "Queen", "Green Arrow", "Archery"));
     }
 
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == Activity.RESULT_OK && requestCode == DELETREQUEST){
+//        if(resultCode == Activity.RESULT_OK && requestCode == DELETREQUEST){
 //            mHeroDataList.remove(data.getIntExtra(DELETEHEROEXTRA,0));
 //            MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
 //            try {
@@ -63,22 +60,23 @@ public class MainActivity extends ActionBarActivity implements MainFragment.Hero
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-        }else if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
-            Hero newHero = new Hero();
+//        }else
+            if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
+                Hero newHero = new Hero();
 
-            newHero.mFirst = data.getStringExtra(ADDHEROEXTRAFIRSTNAME);
-            newHero.mLast = data.getStringExtra(ADDHEROEXTRALASTNAME);
-            newHero.mAlias = data.getStringExtra(ADDHEROEXTRAALIAS);
-            newHero.mPower = data.getStringExtra(ADDHEROEXTRAPOWER);
+                newHero.mFirst = data.getStringExtra(ADDHEROEXTRAFIRSTNAME);
+                newHero.mLast = data.getStringExtra(ADDHEROEXTRALASTNAME);
+                newHero.mAlias = data.getStringExtra(ADDHEROEXTRAALIAS);
+                newHero.mPower = data.getStringExtra(ADDHEROEXTRAPOWER);
 
-            mHeroDataList.add(newHero);
-            MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
-            try {
-                mf.updateList();
-            } catch (IOException e) {
-                e.printStackTrace();
+                mHeroDataList.add(newHero);
+                MainFragment mf = (MainFragment) getFragmentManager().findFragmentById(R.id.container);
+                try {
+                    mf.updateList();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
     }
 
     //InterFace Methods
@@ -103,7 +101,6 @@ public class MainActivity extends ActionBarActivity implements MainFragment.Hero
 //        deleteIntent.putExtra(DetailActivity.DELETEEXTRA, position);
 //        startActivityForResult(deleteIntent, DELETREQUEST);
     }
-
 
 
     @Override
