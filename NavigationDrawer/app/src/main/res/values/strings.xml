@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">NavigationDrawer</string>
+
+    <string name="title_section1">Top Story</string>
+    <string name="title_section2">Other News</string>
+    <string name="title_section3">News Images</string>
+    <string name="title_section4">Settings</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
